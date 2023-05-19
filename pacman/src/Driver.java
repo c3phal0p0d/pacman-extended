@@ -2,6 +2,7 @@ package src;
 
 import src.utility.GameCallback;
 import src.utility.PropertiesLoader;
+import src.matachi.mapeditor.editor.Controller;
 
 import java.util.Properties;
 
@@ -20,6 +21,7 @@ public class Driver {
         }
         final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
         GameCallback gameCallback = new GameCallback();
+        new Controller();
         new Game(gameCallback, properties);
     }
 }

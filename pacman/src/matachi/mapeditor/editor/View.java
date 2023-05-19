@@ -1,4 +1,4 @@
-package matachi.mapeditor.editor;
+package src.matachi.mapeditor.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,13 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-import matachi.mapeditor.grid.Camera;
+import src.matachi.mapeditor.grid.Camera;
 
 
 /**
  * The view of the application.
  * 
- * @author Daniel "MaTachi" Jonsson
+ * @author Daniel "MaTachi" Jonssonz
  * @version 1
  * @since v0.0.5
  * 
@@ -93,8 +93,7 @@ public class View {
 		right.add(loadButton);
 
 		/** The top panel, that shows coordinates and stuff. */
-		CameraInformationLabel cameraInformationLabel = new CameraInformationLabel(
-				camera);
+		CameraInformationLabel cameraInformationLabel = new CameraInformationLabel(camera);
 		GridMouseInformationLabel mouseInformationLabel = new GridMouseInformationLabel(
 				grid);
 
