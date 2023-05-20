@@ -7,28 +7,28 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class LevelChecker {
+public class GameChecker {
     private final String logFilePath = "EditorLog.txt";
-    private ArrayList<LevelCheck> levelChecks;
+    private ArrayList<GameCheck> gameChecks;
     private FileWriter fileWriter;
-    private boolean isLevelValid = true;
+    private boolean isGameFolderValid = true;
 
-    public LevelChecker(){
+    public GameChecker(){
         try {
             fileWriter = new FileWriter(new File(logFilePath));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        levelChecks = new ArrayList<LevelCheck>();
-        levelChecks.add(new LevelCheckA(fileWriter));
+        gameChecks = new ArrayList<GameCheck>();
+        gameChecks.add(new GameCheckA(fileWriter));
     }
 
     public void performChecks(Grid levelMap, String mapFilePath){
         boolean isValid = true;
-        for (LevelCheck levelCheck : levelChecks){
-            isValid = levelCheck.check(levelMap, mapFilePath);
+        for (GameCheck gameCheck : gameChecks){
+            isValid = gameCheck.check(levelMap, mapFilePath);
             if (!isValid){
-                isLevelValid = false;
+                isGameFolderValid = false;
             }
         }
     }

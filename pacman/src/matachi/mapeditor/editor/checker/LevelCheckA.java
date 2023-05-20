@@ -4,14 +4,14 @@ import src.matachi.mapeditor.grid.Grid;
 
 import java.io.FileWriter;
 
-/* Check a. exactly one starting point for PacMan */
+/* Level check A. exactly one starting point for PacMan */
 public class LevelCheckA extends LevelCheck {
     public LevelCheckA(FileWriter fileWriter) {
         super(fileWriter);
     }
 
     @Override
-    public boolean check(Grid levelMap, String mapFilepath, String logFilepath) {
+    public boolean check(Grid levelMap, String mapFilepath) {
         int count = 0;
         // Go through grid finding all PacMan's starting points & counting them up
 

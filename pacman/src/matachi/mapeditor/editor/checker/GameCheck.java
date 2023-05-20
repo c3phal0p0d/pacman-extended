@@ -5,11 +5,11 @@ import src.matachi.mapeditor.grid.Grid;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public abstract class LevelCheck {
-    public abstract boolean check(Grid levelMap, String mapFilePath);
+public abstract class GameCheck {
+    public abstract boolean check(Grid levelMap, String gameFolderFilePath);
     private FileWriter fileWriter;
 
-    public LevelCheck(FileWriter fileWriter){
+    public GameCheck(FileWriter fileWriter){
         this.fileWriter = fileWriter;
     }
 
