@@ -22,6 +22,6 @@ public class Driver {
         final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
         GameCallback gameCallback = new GameCallback();
         new Controller();
-        new Game(gameCallback, properties);
+        //new Game(gameCallback, properties);
     }
 }

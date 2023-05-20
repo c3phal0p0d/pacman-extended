@@ -21,6 +21,8 @@ public class LevelChecker {
         }
         levelChecks = new ArrayList<LevelCheck>();
         levelChecks.add(new LevelCheckA(fileWriter));
+        levelChecks.add(new LevelCheckB(fileWriter));
+        levelChecks.add(new LevelCheckC(fileWriter));
     }
 
     public void performChecks(Grid levelMap, String mapFilePath){
