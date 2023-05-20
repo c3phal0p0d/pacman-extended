@@ -17,6 +17,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import src.matachi.mapeditor.editor.checker.GameChecker;
+import src.matachi.mapeditor.editor.checker.LevelCheck;
+import src.matachi.mapeditor.editor.checker.LevelChecker;
 import src.matachi.mapeditor.grid.Camera;
 import src.matachi.mapeditor.grid.Grid;
 import src.matachi.mapeditor.grid.GridCamera;
@@ -55,6 +58,9 @@ public class Controller implements ActionListener, GUIInformation {
 
 	private int gridWith = Constants.MAP_WIDTH;
 	private int gridHeight = Constants.MAP_HEIGHT;
+
+	private LevelChecker levelChecker = new LevelChecker();
+	private GameChecker gameChecker = new GameChecker();
 
 	/**
 	 * Construct the controller.
@@ -135,6 +141,9 @@ public class Controller implements ActionListener, GUIInformation {
 		int returnVal = chooser.showSaveDialog(null);
 		try {
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				// Apply level checking
+				levelChecker.performChecks(model, chooser.getSelectedFile().getName());
+				//System.out.println(chooser.getSelectedFile().getName());
 
 				Element level = new Element("level");
 				Document doc = new Document(level);
@@ -260,6 +269,10 @@ public class Controller implements ActionListener, GUIInformation {
 							model.setTile(x, y, tileNr);
 						}
 					}
+
+					// Apply level checking
+					levelChecker.performChecks(model, selectedFile.getName());
+					//System.out.println(chooser.getSelectedFile().getName());
 
 					String mapString = model.getMapAsString();
 					grid.redrawGrid();

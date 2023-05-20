@@ -12,7 +12,7 @@ public class GameCheckA extends GameCheck {
     }
 
     @Override
-    public boolean check(Grid levelMap, String mapFilePath) {
+    public boolean check(Grid levelMap, String gameFolderFilePath) {
         return false;
     }
 }
