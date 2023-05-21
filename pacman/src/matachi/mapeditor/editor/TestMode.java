@@ -1,6 +1,7 @@
 package src.matachi.mapeditor.editor;
 
 import src.Game;
+import src.Map;
 import src.matachi.mapeditor.editor.checker.GameChecker;
 import src.matachi.mapeditor.editor.checker.LevelChecker;
 import src.utility.GameCallback;
@@ -14,8 +15,8 @@ public class TestMode extends Mode {
     LevelChecker levelChecker;
     GameChecker gameChecker;
 
-    public TestMode(Controller controller) {
-        super(controller);
+    public TestMode(Controller controller, String filePath) {
+        super(controller, filePath);
     }
     // Apply game & level checking
     // ...
@@ -29,5 +30,6 @@ public class TestMode extends Mode {
     String propertiesPath = DEFAULT_PROPERTIES_PATH;
     final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
     GameCallback gameCallback = new GameCallback();
-    Game game = new Game(gameCallback, properties);
+    Map map = new Map(filePath+"/sample_map1.xml");
+    Game game = new Game(gameCallback, properties, map);
 }

@@ -3,6 +3,7 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
+import src.matachi.mapeditor.editor.Constants;
 import src.utility.GameCallback;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ public class Game extends GameGrid
   private final static int nbHorzCells = 20;
   private final static int nbVertCells = 11;
   protected PacManGameGrid grid = new PacManGameGrid(nbHorzCells, nbVertCells);
+  protected Map map;
 
   protected PacActor pacActor = new PacActor(this);
   private Monster troll = new Monster(this, MonsterType.Troll);
@@ -29,12 +31,13 @@ public class Game extends GameGrid
   private ArrayList<Location> propertyPillLocations = new ArrayList<>();
   private ArrayList<Location> propertyGoldLocations = new ArrayList<>();
 
-  public Game(GameCallback gameCallback, Properties properties)
+  public Game(GameCallback gameCallback, Properties properties, Map map)
   {
     //Setup game
     super(nbHorzCells, nbVertCells, 20, false);
     this.gameCallback = gameCallback;
     this.properties = properties;
+    this.map = map;
     setSimulationPeriod(100);
     setTitle("[PacMan in the Multiverse]");
 
@@ -58,8 +61,6 @@ public class Game extends GameGrid
     pacActor.setSlowDown(3);
     tx5.stopMoving(5);
     setupActorLocations();
-
-
 
     //Run the game
     doRun();
@@ -151,25 +152,34 @@ public class Game extends GameGrid
     return pillAndItemLocations;
   }
 
-
   private void loadPillAndItemsLocations() {
-    String pillsLocationString = properties.getProperty("Pills.location");
-    if (pillsLocationString != null) {
-      String[] singlePillLocationStrings = pillsLocationString.split(";");
-      for (String singlePillLocationString: singlePillLocationStrings) {
-        String[] locationStrings = singlePillLocationString.split(",");
-        propertyPillLocations.add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
+  for (int y=0; y<map.getNbVertCells(); y++){
+    for (int x=0; x<map.getNbHorzCells(); x++){
+      if (map.getTile(x, y)== Constants.PILL_TILE_CHAR){
+        propertyPillLocations.add(new Location(x, y));
+      } else if (map.getTile(x, y)== Constants.GOLD_TILE_CHAR){
+        propertyGoldLocations.add(new Location(x, y));
       }
     }
+  }
 
-    String goldLocationString = properties.getProperty("Gold.location");
-    if (goldLocationString != null) {
-      String[] singleGoldLocationStrings = goldLocationString.split(";");
-      for (String singleGoldLocationString: singleGoldLocationStrings) {
-        String[] locationStrings = singleGoldLocationString.split(",");
-        propertyGoldLocations.add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
-      }
-    }
+//    String pillsLocationString = properties.getProperty("Pills.location");
+//    if (pillsLocationString != null) {
+//      String[] singlePillLocationStrings = pillsLocationString.split(";");
+//      for (String singlePillLocationString: singlePillLocationStrings) {
+//        String[] locationStrings = singlePillLocationString.split(",");
+//        propertyPillLocations.add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
+//      }
+//    }
+//
+//    String goldLocationString = properties.getProperty("Gold.location");
+//    if (goldLocationString != null) {
+//      String[] singleGoldLocationStrings = goldLocationString.split(";");
+//      for (String singleGoldLocationString: singleGoldLocationStrings) {
+//        String[] locationStrings = singleGoldLocationString.split(",");
+//        propertyGoldLocations.add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
+//      }
+//    }
   }
   private void setupPillAndItemsLocations() {
     for (int y = 0; y < nbVertCells; y++)
@@ -189,7 +199,6 @@ public class Game extends GameGrid
         }
       }
     }
-
 
     if (propertyPillLocations.size() > 0) {
       for (Location location : propertyPillLocations) {

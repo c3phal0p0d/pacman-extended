@@ -71,10 +71,10 @@ public class Controller implements ActionListener, GUIInformation {
 	public Controller(String mode, String filePath) {
 		//init(Constants.MAP_WIDTH, Constants.MAP_HEIGHT);
 		if (Objects.equals(mode, "TEST")){
-			this.mode = new TestMode(this);
+			this.mode = new TestMode(this, filePath);
 			System.out.println("Test mode");
 		} else if (Objects.equals(mode, "EDIT")){
-			this.mode = new EditMode(this);
+			this.mode = new EditMode(this, filePath);
 			System.out.println("Edit mode");
 		}
 	}
@@ -85,8 +85,7 @@ public class Controller implements ActionListener, GUIInformation {
 		this.camera = new GridCamera(model, Constants.GRID_WIDTH,
 				Constants.GRID_HEIGHT);
 
-		grid = new GridView(this, camera, tiles); // Every tile is
-													// 30x30 pixels
+		grid = new GridView(this, camera, tiles); // Every tile is 30x30 pixels
 
 		this.view = new View(this, camera, grid, tiles);
 	}
@@ -171,27 +170,27 @@ public class Controller implements ActionListener, GUIInformation {
 						char tileChar = model.getTile(x,y);
 						String type = "PathTile";
 
-						if (tileChar == 'b')
+						if (tileChar == Constants.WALL_TILE_CHAR)
 							type = "WallTile";
-						else if (tileChar == 'c')
+						else if (tileChar == Constants.PILL_TILE_CHAR)
 							type = "PillTile";
-						else if (tileChar == 'd')
+						else if (tileChar == Constants.GOLD_TILE_CHAR)
 							type = "GoldTile";
-						else if (tileChar == 'e')
+						else if (tileChar == Constants.ICE_TILE_CHAR)
 							type = "IceTile";
-						else if (tileChar == 'f')
+						else if (tileChar == Constants.PAC_TILE_CHAR)
 							type = "PacTile";
-						else if (tileChar == 'g')
+						else if (tileChar == Constants.TROLL_TILE_CHAR)
 							type = "TrollTile";
-						else if (tileChar == 'h')
+						else if (tileChar == Constants.TX5_TILE_CHAR)
 							type = "TX5Tile";
-						else if (tileChar == 'i')
+						else if (tileChar == Constants.PORTAL_WHITE_TILE_CHAR)
 							type = "PortalWhiteTile";
-						else if (tileChar == 'j')
+						else if (tileChar == Constants.PORTAL_YELLOW_TILE_CHAR)
 							type = "PortalYellowTile";
-						else if (tileChar == 'k')
+						else if (tileChar == Constants.PORTAL_DARK_GOLD_TILE_CHAR)
 							type = "PortalDarkGoldTile";
-						else if (tileChar == 'l')
+						else if (tileChar == Constants.PORTAL_DARK_GRAY_TILE_CHAR)
 							type = "PortalDarkGrayTile";
 
 						Element e = new Element("cell");
@@ -247,31 +246,31 @@ public class Controller implements ActionListener, GUIInformation {
 							Element cell = (Element) cells.get(x);
 							String cellValue = cell.getText();
 
-							char tileNr = 'a';
+							char tileNr;
 							if (cellValue.equals("PathTile"))
-								tileNr = 'a';
+								tileNr = Constants.PATH_TILE_CHAR;
 							else if (cellValue.equals("WallTile"))
-								tileNr = 'b';
+								tileNr = Constants.WALL_TILE_CHAR;
 							else if (cellValue.equals("PillTile"))
-								tileNr = 'c';
+								tileNr = Constants.PILL_TILE_CHAR;
 							else if (cellValue.equals("GoldTile"))
-								tileNr = 'd';
+								tileNr = Constants.GOLD_TILE_CHAR;
 							else if (cellValue.equals("IceTile"))
-								tileNr = 'e';
+								tileNr = Constants.ICE_TILE_CHAR;
 							else if (cellValue.equals("PacTile"))
-								tileNr = 'f';
+								tileNr = Constants.PAC_TILE_CHAR;
 							else if (cellValue.equals("TrollTile"))
-								tileNr = 'g';
+								tileNr = Constants.TROLL_TILE_CHAR;
 							else if (cellValue.equals("TX5Tile"))
-								tileNr = 'h';
+								tileNr = Constants.TX5_TILE_CHAR;
 							else if (cellValue.equals("PortalWhiteTile"))
-								tileNr = 'i';
+								tileNr = Constants.PORTAL_WHITE_TILE_CHAR;
 							else if (cellValue.equals("PortalYellowTile"))
-								tileNr = 'j';
+								tileNr = Constants.PORTAL_YELLOW_TILE_CHAR;
 							else if (cellValue.equals("PortalDarkGoldTile"))
-								tileNr = 'k';
+								tileNr = Constants.PORTAL_DARK_GOLD_TILE_CHAR;
 							else if (cellValue.equals("PortalDarkGrayTile"))
-								tileNr = 'l';
+								tileNr = Constants.PORTAL_DARK_GRAY_TILE_CHAR;
 							else
 								tileNr = '0';
 
