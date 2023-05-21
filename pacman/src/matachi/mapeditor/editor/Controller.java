@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -59,15 +60,23 @@ public class Controller implements ActionListener, GUIInformation {
 	private int gridWith = Constants.MAP_WIDTH;
 	private int gridHeight = Constants.MAP_HEIGHT;
 
+	private Mode mode;
+
 	private LevelChecker levelChecker = new LevelChecker();
 	private GameChecker gameChecker = new GameChecker();
 
 	/**
 	 * Construct the controller.
 	 */
-	public Controller() {
-		init(Constants.MAP_WIDTH, Constants.MAP_HEIGHT);
-
+	public Controller(String mode, String filePath) {
+		//init(Constants.MAP_WIDTH, Constants.MAP_HEIGHT);
+		if (Objects.equals(mode, "TEST")){
+			this.mode = new TestMode(this);
+			System.out.println("Test mode");
+		} else if (Objects.equals(mode, "EDIT")){
+			this.mode = new EditMode(this);
+			System.out.println("Edit mode");
+		}
 	}
 
 	public void init(int width, int height) {
