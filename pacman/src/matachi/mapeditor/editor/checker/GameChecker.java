@@ -11,7 +11,6 @@ public class GameChecker {
     private final String logFilePath = "EditorLog.txt";
     private ArrayList<GameCheck> gameChecks;
     private FileWriter fileWriter;
-    private boolean isGameValid = true;
 
     public GameChecker(){
         try {
@@ -23,13 +22,13 @@ public class GameChecker {
         gameChecks.add(new GameCheckA(fileWriter));
     }
 
-    public void performChecks(String gameFolderFilePath){
-        boolean isValid = true;
+    public boolean performChecks(String gameFolderFilePath){
         for (GameCheck gameCheck : gameChecks){
-            isValid = gameCheck.check(gameFolderFilePath);
+            boolean isValid = gameCheck.check(gameFolderFilePath);
             if (!isValid){
-                isGameValid = false;
+                return false;
             }
         }
+        return true;
     }
 }
