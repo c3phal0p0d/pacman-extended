@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/* Game check B. the sequence of map files well-defined, that is, is there only one map file named with a particular number */
+/* Checks that the sequence of map files is well-defined, that is, is there only one map file named with a particular number */
 public class MapUniqueNumberCheck extends GameCheck {
 
     public MapUniqueNumberCheck(FileWriter fileWriter) {

@@ -4,7 +4,7 @@ import src.Map;
 
 import java.io.FileWriter;
 
-/* Level check D. each Gold and Pill is accessible to PacMan from the starting point, ignoring monsters but accounting for valid portals */
+/* Check for each Gold and Pill being accessible to PacMan from the starting point, ignoring monsters but accounting for valid portals */
 public class PacmanAccessibleCheck extends LevelCheck {
     public PacmanAccessibleCheck(FileWriter fileWriter) {
         super(fileWriter);
@@ -12,6 +12,7 @@ public class PacmanAccessibleCheck extends LevelCheck {
 
     @Override
     public boolean check(Map map) {
-        return false;
+        // TODO
+        return true;
     }
 }

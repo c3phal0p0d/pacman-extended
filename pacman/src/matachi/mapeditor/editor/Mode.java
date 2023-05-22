@@ -13,5 +13,4 @@ public abstract class Mode {
         this.filePath = filePath;
     }
 
-
 }

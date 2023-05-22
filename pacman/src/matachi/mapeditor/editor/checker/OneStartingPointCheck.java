@@ -1,11 +1,12 @@
 package src.matachi.mapeditor.editor.checker;
 
 import src.Map;
+import src.matachi.mapeditor.editor.Constants;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-/* Level check A. exactly one starting point for PacMan */
+/* Checks that there is exactly one starting point for PacMan */
 public class OneStartingPointCheck extends LevelCheck {
     public OneStartingPointCheck(FileWriter fileWriter) {
         super(fileWriter);
@@ -19,7 +20,7 @@ public class OneStartingPointCheck extends LevelCheck {
         // Go through grid finding all PacMan's starting points & add them to array
         for (int y=0; y<map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
-                if (map.getTile(x, y)=='f'){   // PacMan
+                if (map.getTile(x, y)==Constants.PAC_TILE_CHAR){
                     int[] position = new int[2];
                     position[0] = x;
                     position[1] = y;

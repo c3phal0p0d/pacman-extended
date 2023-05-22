@@ -3,7 +3,7 @@ package src.matachi.mapeditor.editor.checker;
 import java.io.File;
 import java.io.FileWriter;
 
-/* Game check A. at least one correctly named map file in the folder */
+/* Checks for at least one correctly named map file in the folder */
 public class OneCorrectlyNamedMapCheck extends GameCheck {
 
     public OneCorrectlyNamedMapCheck(FileWriter fileWriter) {

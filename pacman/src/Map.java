@@ -30,47 +30,47 @@ public class Map {
             FileReader reader = null;
 
             Document document;
-                if (file.canRead() && file.exists()) {
-                    document = builder.build(file);
+            if (file.canRead() && file.exists()) {
+                document = builder.build(file);
 
-                    Element rootNode = document.getRootElement();
+                Element rootNode = document.getRootElement();
 
-                    List sizeList = rootNode.getChildren("size");
-                    Element sizeElem = (Element) sizeList.get(0);
-                    int height = Integer.parseInt(sizeElem.getChildText("height"));
-                    int width = Integer.parseInt(sizeElem.getChildText("width"));
-                    this.width = width;
-                    this.height = height;
-                    grid = new char[width][height];
+                List sizeList = rootNode.getChildren("size");
+                Element sizeElem = (Element) sizeList.get(0);
+                int height = Integer.parseInt(sizeElem.getChildText("height"));
+                int width = Integer.parseInt(sizeElem.getChildText("width"));
+                this.width = width;
+                this.height = height;
+                grid = new char[width][height];
 
-                    List rows = rootNode.getChildren("row");
-                    for (int y = 0; y < rows.size(); y++) {
-                        Element cellsElem = (Element) rows.get(y);
-                        List cells = cellsElem.getChildren("cell");
+                List rows = rootNode.getChildren("row");
+                for (int y = 0; y < rows.size(); y++) {
+                    Element cellsElem = (Element) rows.get(y);
+                    List cells = cellsElem.getChildren("cell");
 
-                        for (int x = 0; x < cells.size(); x++) {
-                            Element cell = (Element) cells.get(x);
-                            String cellValue = cell.getText();
+                    for (int x = 0; x < cells.size(); x++) {
+                        Element cell = (Element) cells.get(x);
+                        String cellValue = cell.getText();
 
-                            char tileChar = switch (cellValue) {
-                                case "PathTile" -> Constants.PATH_TILE_CHAR;
-                                case "WallTile" -> Constants.WALL_TILE_CHAR;
-                                case "PillTile" -> Constants.PILL_TILE_CHAR;
-                                case "GoldTile" -> Constants.GOLD_TILE_CHAR;
-                                case "IceTile" -> Constants.ICE_TILE_CHAR;
-                                case "PacTile" -> Constants.PAC_TILE_CHAR;
-                                case "TrollTile" -> Constants.TROLL_TILE_CHAR;
-                                case "TX5Tile" -> Constants.TX5_TILE_CHAR;
-                                case "PortalWhiteTile" -> Constants.PORTAL_WHITE_TILE_CHAR;
-                                case "PortalYellowTile" -> Constants.PORTAL_YELLOW_TILE_CHAR;
-                                case "PortalDarkGoldTile" -> Constants.PORTAL_DARK_GOLD_TILE_CHAR;
-                                case "PortalDarkGrayTile" -> Constants.PORTAL_DARK_GRAY_TILE_CHAR;
-                                default -> '0';
-                            };
-                            setTile(x, y, tileChar);
-                        }
+                        char tileChar = switch (cellValue) {
+                            case "PathTile" -> Constants.PATH_TILE_CHAR;
+                            case "WallTile" -> Constants.WALL_TILE_CHAR;
+                            case "PillTile" -> Constants.PILL_TILE_CHAR;
+                            case "GoldTile" -> Constants.GOLD_TILE_CHAR;
+                            case "IceTile" -> Constants.ICE_TILE_CHAR;
+                            case "PacTile" -> Constants.PAC_TILE_CHAR;
+                            case "TrollTile" -> Constants.TROLL_TILE_CHAR;
+                            case "TX5Tile" -> Constants.TX5_TILE_CHAR;
+                            case "PortalWhiteTile" -> Constants.PORTAL_WHITE_TILE_CHAR;
+                            case "PortalYellowTile" -> Constants.PORTAL_YELLOW_TILE_CHAR;
+                            case "PortalDarkGoldTile" -> Constants.PORTAL_DARK_GOLD_TILE_CHAR;
+                            case "PortalDarkGrayTile" -> Constants.PORTAL_DARK_GRAY_TILE_CHAR;
+                            default -> '0';
+                        };
+                        setTile(x, y, tileChar);
                     }
                 }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

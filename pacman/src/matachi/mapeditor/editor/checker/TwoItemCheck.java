@@ -4,7 +4,7 @@ import src.Map;
 
 import java.io.FileWriter;
 
-/* Level check C. at least two Gold and Pill in total */
+/* Checks that there are at least two Gold and Pill in total */
 public class TwoItemCheck extends LevelCheck {
     public TwoItemCheck(FileWriter fileWriter) {
         super(fileWriter);

@@ -111,6 +111,8 @@ public class Controller implements ActionListener, GUIInformation {
 			loadFile();
 		} else if (e.getActionCommand().equals("update")) {
 			updateGrid(gridWith, gridHeight);
+		} else if (e.getActionCommand().equals("test")) {
+			changeMode(new TestMode(this, "game"));
 		}
 	}
 
@@ -290,6 +292,18 @@ public class Controller implements ActionListener, GUIInformation {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void changeMode(Mode mode){
+		this.mode = mode;
+	}
+
+	public LevelChecker getLevelChecker() {
+		return levelChecker;
+	}
+
+	public GameChecker getGameChecker() {
+		return gameChecker;
 	}
 
 	/**

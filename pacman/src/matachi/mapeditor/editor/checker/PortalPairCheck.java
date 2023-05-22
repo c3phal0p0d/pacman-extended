@@ -5,7 +5,7 @@ import src.Map;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-/* Level check B. exactly two tiles for each portal appearing on the map */
+/* Checks that there are exactly two tiles for each portal appearing on the map */
 public class PortalPairCheck extends LevelCheck {
     public PortalPairCheck(FileWriter fileWriter) {
         super(fileWriter);

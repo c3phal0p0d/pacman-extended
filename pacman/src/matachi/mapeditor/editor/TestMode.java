@@ -2,12 +2,14 @@ package src.matachi.mapeditor.editor;
 
 import src.Game;
 import src.Map;
+import src.matachi.mapeditor.editor.checker.GameCheck;
 import src.matachi.mapeditor.editor.checker.GameChecker;
 import src.matachi.mapeditor.editor.checker.LevelChecker;
 import src.utility.GameCallback;
 import src.utility.PropertiesLoader;
 
-import java.util.Properties;
+import java.io.File;
+import java.util.*;
 
 import static src.Driver.DEFAULT_PROPERTIES_PATH;
 
@@ -17,19 +19,62 @@ public class TestMode extends Mode {
 
     public TestMode(Controller controller, String filePath) {
         super(controller, filePath);
+        File file = new File(filePath);
+
+        // Game folder is being tested
+        if (file.isDirectory()){
+            // Convert .xml files to Maps
+            ArrayList<Map> maps = new ArrayList<>();
+            File gameFolder = file;
+            File[] mapFiles = gameFolder.listFiles();
+            if (mapFiles != null) {
+                for (File mapFile : mapFiles) {
+                    maps.add(new Map(gameFolder + "/" + mapFile.getName()));
+                }
+            }
+
+            // Apply game & level checking
+            boolean isGameValid = controller.getGameChecker().performChecks(filePath);
+
+            boolean areLevelsValid = true;
+            for (Map map: maps){
+                if (!controller.getLevelChecker().performChecks(map)){
+                    areLevelsValid = false;
+                }
+            }
+
+            // If checks succeed, run game for all level maps
+            if (isGameValid && areLevelsValid){
+                System.out.println("Game and level checks succeeded");
+                maps.sort(Comparator.comparing(Map::getFilePath));
+                String propertiesPath = DEFAULT_PROPERTIES_PATH;
+                final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
+                GameCallback gameCallback = new GameCallback();
+
+                for (Map map : maps){
+                    new Game(gameCallback, properties, map);
+                }
+            } else {
+                controller.changeMode(new TestMode(controller, maps.get(0).getFilePath()));
+            }
+        }
+
+        // Single level map is being tested
+        else if (file.isFile()){
+            // Convert .xml file to Map
+            Map map = new Map(filePath);
+
+            // Apply level checking
+            boolean isLevelValid = controller.getLevelChecker().performChecks(map);
+
+            // If checks succeed, run game with that level map
+            if (isLevelValid){
+                System.out.println("Level checks succeeded");
+                String propertiesPath = DEFAULT_PROPERTIES_PATH;
+                final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
+                GameCallback gameCallback = new GameCallback();
+                new Game(gameCallback, properties, map);
+            }
+        }
     }
-    // Apply game & level checking
-    // ...
-
-    // If checks succeed, run game
-    // First convert .xml file to Map class to be used by game
-    // ...
-
-    // Run game
-    // Temporarily hardcoded for test purposes
-    String propertiesPath = DEFAULT_PROPERTIES_PATH;
-    final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
-    GameCallback gameCallback = new GameCallback();
-    Map map = new Map(filePath+"/sample_map1.xml");
-    Game game = new Game(gameCallback, properties, map);
 }
