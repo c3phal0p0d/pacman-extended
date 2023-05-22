@@ -1,14 +1,13 @@
 package src.matachi.mapeditor.editor.checker;
 
 import src.Map;
-import src.matachi.mapeditor.grid.Grid;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
 
 /* Level check B. exactly two tiles for each portal appearing on the map */
-public class LevelCheckB extends LevelCheck {
-    public LevelCheckB(FileWriter fileWriter) {
+public class PortalPairCheck extends LevelCheck {
+    public PortalPairCheck(FileWriter fileWriter) {
         super(fileWriter);
     }
 

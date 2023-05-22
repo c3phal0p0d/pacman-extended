@@ -1,19 +1,14 @@
 package src.matachi.mapeditor.editor.checker;
 
-import src.Map;
-import src.matachi.mapeditor.grid.Grid;
-
 import java.io.File;
 import java.io.FileWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 /* Game check B. the sequence of map files well-defined, that is, is there only one map file named with a particular number */
-public class GameCheckB extends GameCheck {
+public class MapUniqueNumberCheck extends GameCheck {
 
-    public GameCheckB(FileWriter fileWriter) {
+    public MapUniqueNumberCheck(FileWriter fileWriter) {
         super(fileWriter);
     }
 

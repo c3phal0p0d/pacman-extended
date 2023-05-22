@@ -1,14 +1,13 @@
 package src.matachi.mapeditor.editor.checker;
 
 import src.Map;
-import src.matachi.mapeditor.grid.Grid;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
 
 /* Level check A. exactly one starting point for PacMan */
-public class LevelCheckA extends LevelCheck {
-    public LevelCheckA(FileWriter fileWriter) {
+public class OneStartingPointCheck extends LevelCheck {
+    public OneStartingPointCheck(FileWriter fileWriter) {
         super(fileWriter);
     }
 

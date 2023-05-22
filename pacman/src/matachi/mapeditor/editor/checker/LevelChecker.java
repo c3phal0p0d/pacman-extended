@@ -1,7 +1,6 @@
 package src.matachi.mapeditor.editor.checker;
 
 import src.Map;
-import src.matachi.mapeditor.grid.Grid;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,7 +11,6 @@ public class LevelChecker {
     private final String logFilePath = "EditorLog.txt";
     private ArrayList<LevelCheck> levelChecks;
     private FileWriter fileWriter;
-    private boolean isLevelValid = true;
 
     public LevelChecker(){
         try {
@@ -21,18 +19,18 @@ public class LevelChecker {
             ex.printStackTrace();
         }
         levelChecks = new ArrayList<LevelCheck>();
-        levelChecks.add(new LevelCheckA(fileWriter));
-        levelChecks.add(new LevelCheckB(fileWriter));
-        levelChecks.add(new LevelCheckC(fileWriter));
+        levelChecks.add(new OneStartingPointCheck(fileWriter));
+        levelChecks.add(new PortalPairCheck(fileWriter));
+        levelChecks.add(new TwoItemCheck(fileWriter));
     }
 
-    public void performChecks(Map map){
-        boolean isValid = true;
+    public boolean performChecks(Map map){
         for (LevelCheck levelCheck : levelChecks){
-            isValid = levelCheck.check(map);
+            boolean isValid = levelCheck.check(map);
             if (!isValid){
-                isLevelValid = false;
+                return false;
             }
         }
+        return true;
     }
 }

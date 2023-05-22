@@ -1,7 +1,5 @@
 package src.matachi.mapeditor.editor.checker;
 
-import src.matachi.mapeditor.grid.Grid;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,7 +17,8 @@ public class GameChecker {
             ex.printStackTrace();
         }
         gameChecks = new ArrayList<GameCheck>();
-        gameChecks.add(new GameCheckA(fileWriter));
+        gameChecks.add(new OneCorrectlyNamedMapCheck(fileWriter));
+        gameChecks.add(new MapUniqueNumberCheck(fileWriter));
     }
 
     public boolean performChecks(String gameFolderFilePath){

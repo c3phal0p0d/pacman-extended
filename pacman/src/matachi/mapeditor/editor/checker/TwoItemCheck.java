@@ -1,14 +1,12 @@
 package src.matachi.mapeditor.editor.checker;
 
 import src.Map;
-import src.matachi.mapeditor.grid.Grid;
 
 import java.io.FileWriter;
-import java.util.ArrayList;
 
 /* Level check C. at least two Gold and Pill in total */
-public class LevelCheckC extends LevelCheck {
-    public LevelCheckC(FileWriter fileWriter) {
+public class TwoItemCheck extends LevelCheck {
+    public TwoItemCheck(FileWriter fileWriter) {
         super(fileWriter);
     }
 
