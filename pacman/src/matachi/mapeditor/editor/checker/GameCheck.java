@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public abstract class GameCheck {
-    public abstract boolean check(Grid levelMap, String gameFolderFilePath);
+    public abstract boolean check(String gameFolderFilePath);
     private FileWriter fileWriter;
 
     public GameCheck(FileWriter fileWriter){

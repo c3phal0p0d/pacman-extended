@@ -18,6 +18,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import src.Map;
 import src.matachi.mapeditor.editor.checker.GameChecker;
 import src.matachi.mapeditor.editor.checker.LevelCheck;
 import src.matachi.mapeditor.editor.checker.LevelChecker;
@@ -150,7 +151,7 @@ public class Controller implements ActionListener, GUIInformation {
 		try {
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				// Apply level checking
-				levelChecker.performChecks(model, chooser.getSelectedFile().getName());
+				levelChecker.performChecks(new Map(chooser.getSelectedFile().getName()));
 				//System.out.println(chooser.getSelectedFile().getName());
 
 				Element level = new Element("level");
@@ -279,7 +280,7 @@ public class Controller implements ActionListener, GUIInformation {
 					}
 
 					// Apply level checking
-					levelChecker.performChecks(model, selectedFile.getName());
+					levelChecker.performChecks( new Map(selectedFile.getName()));
 					//System.out.println(chooser.getSelectedFile().getName());
 
 					String mapString = model.getMapAsString();

@@ -1,5 +1,6 @@
 package src.matachi.mapeditor.editor.checker;
 
+import src.Map;
 import src.matachi.mapeditor.grid.Grid;
 
 import java.io.FileWriter;
@@ -12,7 +13,7 @@ public class LevelCheckD extends LevelCheck {
     }
 
     @Override
-    public boolean check(Grid levelMap, String mapFilePath) {
+    public boolean check(Map map) {
         return false;
     }
 }

@@ -1,5 +1,6 @@
 package src.matachi.mapeditor.editor.checker;
 
+import src.Map;
 import src.matachi.mapeditor.grid.Grid;
 
 import java.io.File;
@@ -25,10 +26,10 @@ public class LevelChecker {
         levelChecks.add(new LevelCheckC(fileWriter));
     }
 
-    public void performChecks(Grid levelMap, String mapFilePath){
+    public void performChecks(Map map){
         boolean isValid = true;
         for (LevelCheck levelCheck : levelChecks){
-            isValid = levelCheck.check(levelMap, mapFilePath);
+            isValid = levelCheck.check(map);
             if (!isValid){
                 isLevelValid = false;
             }

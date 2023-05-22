@@ -1,5 +1,6 @@
 package src.matachi.mapeditor.editor.checker;
 
+import src.Map;
 import src.matachi.mapeditor.grid.Grid;
 
 import java.io.FileWriter;
@@ -12,7 +13,7 @@ public class LevelCheckB extends LevelCheck {
     }
 
     @Override
-    public boolean check(Grid levelMap, String mapFilePath) {
+    public boolean check(Map map) {
         int whiteCount = 0;
         int yellowCount = 0;
         int darkGoldCount = 0;
@@ -22,21 +23,21 @@ public class LevelCheckB extends LevelCheck {
         ArrayList<int[]> darkGoldPositions = new ArrayList<>();
         ArrayList<int[]> darkGrayPositions = new ArrayList<>();
 
-        for (int y=0; y<levelMap.getHeight(); y++) {
-            for (int x = 0; x < levelMap.getWidth(); x++) {
+        for (int y=0; y<map.getHeight(); y++) {
+            for (int x = 0; x < map.getWidth(); x++) {
                 int[] position = new int[2];
                 position[0] = x;
                 position[1] = y;
-                if (levelMap.getTile(x, y) == 'i'){ // White portal
+                if (map.getTile(x, y) == 'i'){ // White portal
                     whitePositions.add(position);
                     whiteCount++;
-                } else if (levelMap.getTile(x, y) == 'j'){  // Yellow portal
+                } else if (map.getTile(x, y) == 'j'){  // Yellow portal
                     yellowPositions.add(position);
                     yellowCount++;
-                } else if (levelMap.getTile(x, y) == 'k'){  // Dark gold portal
+                } else if (map.getTile(x, y) == 'k'){  // Dark gold portal
                     darkGoldPositions.add(position);
                     darkGoldCount++;
-                } else if (levelMap.getTile(x, y) == 'l'){  // Dark gray portal
+                } else if (map.getTile(x, y) == 'l'){  // Dark gray portal
                     darkGrayPositions.add(position);
                     darkGrayCount++;
                 }
@@ -45,7 +46,7 @@ public class LevelCheckB extends LevelCheck {
 
         if (whiteCount>0&&whiteCount!=2){
             // log error
-            StringBuilder str = new StringBuilder("Level " + mapFilePath + " - portal White count is not 2: ");
+            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - portal White count is not 2: ");
             for (int[] position: whitePositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);
@@ -56,7 +57,7 @@ public class LevelCheckB extends LevelCheck {
 
         if (yellowCount>0&&yellowCount!=2){
             // log error
-            StringBuilder str = new StringBuilder("Level " + mapFilePath + " - portal Yellow count is not 2: ");
+            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - portal Yellow count is not 2: ");
             for (int[] position: yellowPositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);
@@ -67,7 +68,7 @@ public class LevelCheckB extends LevelCheck {
 
         if (darkGoldCount>0&&darkGoldCount!=2){
             // log error
-            StringBuilder str = new StringBuilder("Level " + mapFilePath + " - portal Dark Gold count is not 2: ");
+            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - portal Dark Gold count is not 2: ");
             for (int[] position: darkGoldPositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);
@@ -78,7 +79,7 @@ public class LevelCheckB extends LevelCheck {
 
         if (darkGrayCount>0&&darkGrayCount!=2){
             // log error
-            StringBuilder str = new StringBuilder("Level " + mapFilePath + " - portal Dark Gray count is not 2: ");
+            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - portal Dark Gray count is not 2: ");
             for (int[] position: darkGrayPositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);

@@ -1,5 +1,6 @@
 package src.matachi.mapeditor.editor.checker;
 
+import src.Map;
 import src.matachi.mapeditor.grid.Grid;
 
 import java.io.FileWriter;
@@ -12,13 +13,13 @@ public class LevelCheckC extends LevelCheck {
     }
 
     @Override
-    public boolean check(Grid levelMap, String mapFilePath) {
+    public boolean check(Map map) {
         int goldAndPillCount = 0;
 
         // Go through grid finding all squares with gold and pills, and counting them up
-        for (int y=0; y<levelMap.getHeight(); y++) {
-            for (int x = 0; x < levelMap.getWidth(); x++) {
-                if (levelMap.getTile(x, y)=='c'||levelMap.getTile(x, y)=='d'){   // Gold or Pill
+        for (int y=0; y<map.getHeight(); y++) {
+            for (int x = 0; x < map.getWidth(); x++) {
+                if (map.getTile(x, y)=='c'||map.getTile(x, y)=='d'){   // Gold or Pill
                     goldAndPillCount++;
                 }
             }
@@ -26,7 +27,7 @@ public class LevelCheckC extends LevelCheck {
 
         if (goldAndPillCount<2){
             // log error
-            String str = "Level " + mapFilePath + " - less than 2 Gold and Pill";
+            String str = "Level " + map.getFilePath() + " - less than 2 Gold and Pill";
             logCheckFailure(str);
             return false;
         }

@@ -13,8 +13,8 @@ import java.util.List;
 
 public class Map {
     String filePath;
-    private int nbHorzCells;
-    private int nbVertCells;
+    private int width;
+    private int height;
     char[][] grid;
 
     public Map(String filePath){
@@ -39,9 +39,9 @@ public class Map {
                     Element sizeElem = (Element) sizeList.get(0);
                     int height = Integer.parseInt(sizeElem.getChildText("height"));
                     int width = Integer.parseInt(sizeElem.getChildText("width"));
-                    nbHorzCells = width;
-                    nbVertCells = height;
-                    grid = new char[nbHorzCells][nbVertCells];
+                    this.width = width;
+                    this.height = height;
+                    grid = new char[width][height];
 
                     List rows = rootNode.getChildren("row");
                     for (int y = 0; y < rows.size(); y++) {
@@ -88,11 +88,11 @@ public class Map {
         return filePath;
     }
 
-    public int getNbHorzCells() {
-        return nbHorzCells;
+    public int getWidth() {
+        return width;
     }
 
-    public int getNbVertCells() {
-        return nbVertCells;
+    public int getHeight() {
+        return height;
     }
 }

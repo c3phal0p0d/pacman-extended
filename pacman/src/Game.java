@@ -32,12 +32,12 @@ public class Game extends GameGrid
   public Game(GameCallback gameCallback, Properties properties, Map map)
   {
     //Setup game
-    super(map.getNbHorzCells(), map.getNbVertCells(), 20, false);
+    super(map.getWidth(), map.getHeight(), 20, false);
     this.gameCallback = gameCallback;
     this.properties = properties;
     this.map = map;
-    nbHorzCells = map.getNbHorzCells();
-    nbVertCells = map.getNbVertCells();
+    nbHorzCells = map.getWidth();
+    nbVertCells = map.getHeight();
     setSimulationPeriod(100);
     setTitle("[PacMan in the Multiverse]");
 
@@ -105,8 +105,8 @@ public class Game extends GameGrid
   }
 
   private void setupActorLocations() {
-    for (int y=0; y<map.getNbVertCells(); y++) {
-      for (int x = 0; x < map.getNbHorzCells(); x++) {
+    for (int y=0; y<map.getHeight(); y++) {
+      for (int x = 0; x < map.getWidth(); x++) {
         if (map.getTile(x, y) == Constants.TROLL_TILE_CHAR) {
           addActor(troll, new Location(x, y), Location.NORTH);
         } else if (map.getTile(x, y) == Constants.TX5_TILE_CHAR) {
@@ -150,8 +150,8 @@ public class Game extends GameGrid
   }
 
   private void loadPillAndItemsLocations() {
-    for (int y=0; y<map.getNbVertCells(); y++){
-      for (int x=0; x<map.getNbHorzCells(); x++){
+    for (int y=0; y<map.getHeight(); y++){
+      for (int x=0; x<map.getWidth(); x++){
         if (map.getTile(x, y)== Constants.PILL_TILE_CHAR){
           propertyPillLocations.add(new Location(x, y));
         } else if (map.getTile(x, y)== Constants.GOLD_TILE_CHAR){
