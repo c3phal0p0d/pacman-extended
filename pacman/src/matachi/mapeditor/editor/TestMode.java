@@ -2,9 +2,8 @@ package src.matachi.mapeditor.editor;
 
 import src.Game;
 import src.Map;
-import src.matachi.mapeditor.editor.checker.GameCheck;
-import src.matachi.mapeditor.editor.checker.GameChecker;
-import src.matachi.mapeditor.editor.checker.LevelChecker;
+import src.matachi.mapeditor.editor.checker.gamechecker.GameChecker;
+import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 import src.utility.GameCallback;
 import src.utility.PropertiesLoader;
 

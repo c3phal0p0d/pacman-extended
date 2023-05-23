@@ -1,4 +1,4 @@
-package src.matachi.mapeditor.editor.checker;
+package src.matachi.mapeditor.editor.checker.levelchecker;
 
 import src.Map;
 
@@ -6,9 +6,12 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 /* Checks that there are exactly two tiles for each portal appearing on the map */
-public class PortalPairCheck extends LevelCheck {
-    public PortalPairCheck(FileWriter fileWriter) {
-        super(fileWriter);
+public class PortalPairCheck implements LevelCheck {
+
+    private LevelChecker levelChecker;
+
+    public PortalPairCheck(LevelChecker levelChecker) {
+        this.levelChecker = levelChecker;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class PortalPairCheck extends LevelCheck {
                 }
                 str.append(positionStr);
             }
-            logCheckFailure(str.toString());
+            logCheckFailure(levelChecker.getFileWriter(), str.toString());
             return false;
         }
 
@@ -73,7 +76,7 @@ public class PortalPairCheck extends LevelCheck {
                 }
                 str.append(positionStr);
             }
-            logCheckFailure(str.toString());
+            logCheckFailure(levelChecker.getFileWriter(), str.toString());
             return false;
         }
 
@@ -90,7 +93,7 @@ public class PortalPairCheck extends LevelCheck {
                 }
                 str.append(positionStr);
             }
-            logCheckFailure(str.toString());
+            logCheckFailure(levelChecker.getFileWriter(), str.toString());
             return false;
         }
 
@@ -107,7 +110,7 @@ public class PortalPairCheck extends LevelCheck {
                 }
                 str.append(positionStr);
             }
-            logCheckFailure(str.toString());
+            logCheckFailure(levelChecker.getFileWriter(), str.toString());
             return false;
         }
 

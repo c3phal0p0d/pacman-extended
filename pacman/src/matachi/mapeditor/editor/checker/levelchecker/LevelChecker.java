@@ -1,4 +1,4 @@
-package src.matachi.mapeditor.editor.checker;
+package src.matachi.mapeditor.editor.checker.levelchecker;
 
 import src.Map;
 
@@ -19,9 +19,9 @@ public class LevelChecker {
             ex.printStackTrace();
         }
         levelChecks = new ArrayList<LevelCheck>();
-        levelChecks.add(new OneStartingPointCheck(fileWriter));
-        levelChecks.add(new PortalPairCheck(fileWriter));
-        levelChecks.add(new TwoItemCheck(fileWriter));
+        levelChecks.add(new OneStartingPointCheck(this));
+        levelChecks.add(new PortalPairCheck(this));
+        levelChecks.add(new TwoItemCheck(this));
     }
 
     public boolean performChecks(Map map){
@@ -33,5 +33,9 @@ public class LevelChecker {
             }
         }
         return allChecksValid;
+    }
+
+    public FileWriter getFileWriter() {
+        return fileWriter;
     }
 }
