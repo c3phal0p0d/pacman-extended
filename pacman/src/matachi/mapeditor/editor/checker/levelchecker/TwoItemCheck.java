@@ -1,13 +1,16 @@
-package src.matachi.mapeditor.editor.checker;
+package src.matachi.mapeditor.editor.checker.levelchecker;
 
 import src.Map;
 
 import java.io.FileWriter;
 
 /* Checks that there are at least two Gold and Pill in total */
-public class TwoItemCheck extends LevelCheck {
-    public TwoItemCheck(FileWriter fileWriter) {
-        super(fileWriter);
+public class TwoItemCheck implements LevelCheck {
+
+    private LevelChecker levelChecker;
+
+    public TwoItemCheck(LevelChecker levelChecker) {
+        this.levelChecker = levelChecker;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class TwoItemCheck extends LevelCheck {
         if (goldAndPillCount<2){
             // log error
             String str = "Level " + map.getFilePath() + " - less than 2 Gold and Pill";
-            logCheckFailure(str);
+            logCheckFailure(levelChecker.getFileWriter(), str);
             return false;
         }
 

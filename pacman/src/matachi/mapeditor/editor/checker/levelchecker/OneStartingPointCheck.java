@@ -1,4 +1,4 @@
-package src.matachi.mapeditor.editor.checker;
+package src.matachi.mapeditor.editor.checker.levelchecker;
 
 import src.Map;
 import src.matachi.mapeditor.editor.Constants;
@@ -7,9 +7,11 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 /* Checks that there is exactly one starting point for PacMan */
-public class OneStartingPointCheck extends LevelCheck {
-    public OneStartingPointCheck(FileWriter fileWriter) {
-        super(fileWriter);
+public class OneStartingPointCheck implements LevelCheck {
+
+    private LevelChecker levelChecker;
+    public OneStartingPointCheck(LevelChecker levelChecker) {
+        this.levelChecker = levelChecker;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class OneStartingPointCheck extends LevelCheck {
         if (count==0){
             // log error
             String str = "Level " + map.getFilePath() + " - no start for PacMan";
-            logCheckFailure(str);
+            logCheckFailure(levelChecker.getFileWriter(), str);
             return false;
         }
         else if (count>1){
@@ -43,7 +45,7 @@ public class OneStartingPointCheck extends LevelCheck {
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);
             }
-            logCheckFailure(str.toString());
+            logCheckFailure(levelChecker.getFileWriter(), str.toString());
             return false;
         }
 

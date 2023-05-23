@@ -1,4 +1,4 @@
-package src.matachi.mapeditor.editor.checker;
+package src.matachi.mapeditor.editor.checker.gamechecker;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,8 +17,8 @@ public class GameChecker {
             ex.printStackTrace();
         }
         gameChecks = new ArrayList<GameCheck>();
-        gameChecks.add(new OneCorrectlyNamedMapCheck(fileWriter));
-        gameChecks.add(new MapUniqueNumberCheck(fileWriter));
+        gameChecks.add(new OneCorrectlyNamedMapCheck(this));
+        gameChecks.add(new MapUniqueNumberCheck(this));
     }
 
     public boolean performChecks(String gameFolderFilePath){
@@ -29,5 +29,9 @@ public class GameChecker {
             }
         }
         return true;
+    }
+
+    public FileWriter getFileWriter() {
+        return fileWriter;
     }
 }

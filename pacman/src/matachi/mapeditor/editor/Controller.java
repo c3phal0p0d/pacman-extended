@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,9 +18,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import src.Map;
-import src.matachi.mapeditor.editor.checker.GameChecker;
-import src.matachi.mapeditor.editor.checker.LevelCheck;
-import src.matachi.mapeditor.editor.checker.LevelChecker;
+import src.matachi.mapeditor.editor.checker.gamechecker.GameChecker;
+import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 import src.matachi.mapeditor.grid.Camera;
 import src.matachi.mapeditor.grid.Grid;
 import src.matachi.mapeditor.grid.GridCamera;

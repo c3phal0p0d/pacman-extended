@@ -1,4 +1,4 @@
-package src.matachi.mapeditor.editor.checker;
+package src.matachi.mapeditor.editor.checker.gamechecker;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /* Checks that the sequence of map files is well-defined, that is, is there only one map file named with a particular number */
-public class MapUniqueNumberCheck extends GameCheck {
+public class MapUniqueNumberCheck implements GameCheck {
 
-    public MapUniqueNumberCheck(FileWriter fileWriter) {
-        super(fileWriter);
+    private GameChecker gameChecker;
+
+    public MapUniqueNumberCheck(GameChecker gameChecker) {
+        this.gameChecker = gameChecker;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class MapUniqueNumberCheck extends GameCheck {
                     String positionStr = String.format("%s; ", filename.toString());
                     str.append(positionStr);
                 }
-                logCheckFailure(str.toString());;
+                logCheckFailure(gameChecker.getFileWriter(), str.toString());;
                 return false;
             }
         }

@@ -1,13 +1,15 @@
-package src.matachi.mapeditor.editor.checker;
+package src.matachi.mapeditor.editor.checker.gamechecker;
 
 import java.io.File;
 import java.io.FileWriter;
 
 /* Checks for at least one correctly named map file in the folder */
-public class OneCorrectlyNamedMapCheck extends GameCheck {
+public class OneCorrectlyNamedMapCheck implements GameCheck {
 
-    public OneCorrectlyNamedMapCheck(FileWriter fileWriter) {
-        super(fileWriter);
+    private GameChecker gameChecker;
+
+    public OneCorrectlyNamedMapCheck(GameChecker gameChecker) {
+        this.gameChecker = gameChecker;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class OneCorrectlyNamedMapCheck extends GameCheck {
         }
         // log error
         String str = "Game " + gameFolderFilePath + " – no maps found";
-        logCheckFailure(str);
+        logCheckFailure(gameChecker.getFileWriter(), str);
 
         return false;
     }
