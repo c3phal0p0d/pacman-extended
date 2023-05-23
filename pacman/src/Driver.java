@@ -20,7 +20,6 @@ public class Driver {
      */
 
     public static void main(String args[]) {
-        String propertiesPath = DEFAULT_PROPERTIES_PATH;
         String mode = null;
         String filePath = null;
         if (args.length > 0) {
@@ -44,5 +43,11 @@ public class Driver {
             mode = "EDIT";
         }
         new Controller(mode, filePath);   // open editor
+
+        // Comment previous code & uncomment the following in order to test a specific map without going through level/game checking
+//        String propertiesPath = DEFAULT_PROPERTIES_PATH;
+//        final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
+//        GameCallback gameCallback = new GameCallback();
+//        new Game(gameCallback, properties, new Map("game/sample_map1.xml"));
     }
 }

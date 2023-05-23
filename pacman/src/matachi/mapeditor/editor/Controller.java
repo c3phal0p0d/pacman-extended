@@ -285,7 +285,6 @@ public class Controller implements ActionListener, GUIInformation {
 					levelChecker.performChecks( new Map(selectedFile.getName()));
 					//System.out.println(chooser.getSelectedFile().getName());
 
-					String mapString = model.getMapAsString();
 					grid.redrawGrid();
 				}
 			}
@@ -304,6 +303,14 @@ public class Controller implements ActionListener, GUIInformation {
 
 	public GameChecker getGameChecker() {
 		return gameChecker;
+	}
+
+	public Grid getModel(){
+		return model;
+	}
+
+	public GridView getGrid(){
+		return grid;
 	}
 
 	/**

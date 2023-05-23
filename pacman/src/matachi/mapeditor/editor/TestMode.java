@@ -20,6 +20,7 @@ public class TestMode extends Mode {
     public TestMode(Controller controller, String filePath) {
         super(controller, filePath);
         File file = new File(filePath);
+        System.out.println(filePath);
 
         // Game folder is being tested
         if (file.isDirectory()){
@@ -54,8 +55,15 @@ public class TestMode extends Mode {
                 for (Map map : maps){
                     new Game(gameCallback, properties, map);
                 }
+
+                // After tests are done, return to edit mode with no map
+                controller.changeMode(new EditMode(controller, null));
+
             } else {
-                controller.changeMode(new TestMode(controller, maps.get(0).getFilePath()));
+                System.out.println("Failed game & level checks");
+
+                // If checks fail, return to edit mode with no map
+                controller.changeMode(new EditMode(controller, null));
             }
         }
 
@@ -74,6 +82,14 @@ public class TestMode extends Mode {
                 final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
                 GameCallback gameCallback = new GameCallback();
                 new Game(gameCallback, properties, map);
+
+                // After test is done, return to edit mode with map open
+                controller.changeMode(new EditMode(controller, filePath));
+            } else {
+                System.out.println("Failed game & level checks");
+
+                // If checks fail, return to edit mode with map open
+                controller.changeMode(new EditMode(controller, filePath));
             }
         }
     }
