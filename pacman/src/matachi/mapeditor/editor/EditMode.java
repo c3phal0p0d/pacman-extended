@@ -24,9 +24,8 @@ public class EditMode extends Mode {
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
                 model.setTile(x, y, map.getTile(x, y));
-                grid.redrawGrid();
             }
         }
-
+        grid.redrawGrid();
     }
 }
