@@ -5,6 +5,7 @@ import src.Map;
 import src.matachi.mapeditor.grid.Grid;
 import src.matachi.mapeditor.grid.GridView;
 
+import java.io.File;
 import java.util.List;
 
 public class EditMode extends Mode {
@@ -17,7 +18,8 @@ public class EditMode extends Mode {
     }
 
     public void loadMapIntoEditor(String filePath, Grid model, GridView grid){
-        Map map = new Map(filePath);
+        File mapFIle = new File(filePath);
+        Map map = new Map(mapFIle.getName(), filePath);
 
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {

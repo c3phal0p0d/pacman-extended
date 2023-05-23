@@ -45,7 +45,7 @@ public class PortalPairCheck extends LevelCheck {
 
         if (whiteCount>0&&whiteCount!=2){
             // log error
-            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - portal White count is not 2: ");
+            StringBuilder str = new StringBuilder("Level " + map.getName() + " - portal White count is not 2: ");
             for (int[] position: whitePositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);
@@ -56,7 +56,7 @@ public class PortalPairCheck extends LevelCheck {
 
         if (yellowCount>0&&yellowCount!=2){
             // log error
-            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - portal Yellow count is not 2: ");
+            StringBuilder str = new StringBuilder("Level " + map.getName() + " - portal Yellow count is not 2: ");
             for (int[] position: yellowPositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);
@@ -67,7 +67,7 @@ public class PortalPairCheck extends LevelCheck {
 
         if (darkGoldCount>0&&darkGoldCount!=2){
             // log error
-            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - portal Dark Gold count is not 2: ");
+            StringBuilder str = new StringBuilder("Level " + map.getName() + " - portal Dark Gold count is not 2: ");
             for (int[] position: darkGoldPositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);
@@ -78,7 +78,7 @@ public class PortalPairCheck extends LevelCheck {
 
         if (darkGrayCount>0&&darkGrayCount!=2){
             // log error
-            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - portal Dark Gray count is not 2: ");
+            StringBuilder str = new StringBuilder("Level " + map.getName() + " - portal Dark Gray count is not 2: ");
             for (int[] position: darkGrayPositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);

@@ -19,8 +19,12 @@ public class TestMode extends Mode {
 
     public TestMode(Controller controller, String filePath) {
         super(controller, filePath);
+
+        if (filePath==null){
+            controller.changeMode(new EditMode(controller, null));
+        }
+
         File file = new File(filePath);
-        System.out.println(filePath);
 
         // Game folder is being tested
         if (file.isDirectory()){
@@ -30,7 +34,7 @@ public class TestMode extends Mode {
             File[] mapFiles = gameFolder.listFiles();
             if (mapFiles != null) {
                 for (File mapFile : mapFiles) {
-                    maps.add(new Map(gameFolder + "/" + mapFile.getName()));
+                    maps.add(new Map(mapFile.getName(), mapFile.getPath()));
                 }
             }
 
@@ -70,7 +74,7 @@ public class TestMode extends Mode {
         // Single level map is being tested
         else if (file.isFile()){
             // Convert .xml file to Map
-            Map map = new Map(filePath);
+            Map map = new Map(file.getName(), file.getPath());
 
             // Apply level checking
             boolean isLevelValid = controller.getLevelChecker().performChecks(map);

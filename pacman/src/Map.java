@@ -13,12 +13,16 @@ import java.util.List;
 
 public class Map {
     String filePath;
+    String name;
     private int width;
     private int height;
     char[][] grid;
 
-    public Map(String filePath){
+    public Map(String name, String filePath){
+        this.name = name;
         this.filePath = filePath;
+        System.out.println(filePath);
+        System.out.println(name);
         convertFromXML(filePath);
     }
 
@@ -94,5 +98,9 @@ public class Map {
 
     public int getHeight() {
         return height;
+    }
+
+    public String getName() {
+        return name;
     }
 }
