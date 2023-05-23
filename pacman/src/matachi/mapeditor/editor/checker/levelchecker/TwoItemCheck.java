@@ -29,7 +29,7 @@ public class TwoItemCheck implements LevelCheck {
         if (goldAndPillCount<2){
             // log error
             String str = "Level " + map.getName() + " - less than 2 Gold and Pill";
-            logCheckFailure(str);
+            logCheckFailure(levelChecker.getFileWriter(), str);
             return false;
         }
 

@@ -35,7 +35,7 @@ public class OneStartingPointCheck implements LevelCheck {
         if (count==0){
             // log error
             String str = "Level " + map.getName() + " - no start for PacMan";
-            logCheckFailure(str);
+            logCheckFailure(levelChecker.getFileWriter(), str);
             return false;
         }
         else if (count>1){
