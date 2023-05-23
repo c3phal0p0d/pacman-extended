@@ -34,13 +34,13 @@ public class OneStartingPointCheck implements LevelCheck {
 
         if (count==0){
             // log error
-            String str = "Level " + map.getFilePath() + " - no start for PacMan";
-            logCheckFailure(levelChecker.getFileWriter(), str);
+            String str = "Level " + map.getName() + " - no start for PacMan";
+            logCheckFailure(str);
             return false;
         }
         else if (count>1){
             // log error: [Level 5_levelname.xml – more than one start for Pacman: (3,7); (8, 1); (5, 2)]
-            StringBuilder str = new StringBuilder("Level " + map.getFilePath() + " - more than one start for PacMan: ");
+            StringBuilder str = new StringBuilder("Level " + map.getName() + " - more than one start for PacMan: ");
             for (int[] position: pacmanPositions){
                 String positionStr = String.format("(%d, %d); ", position[0], position[1]);
                 str.append(positionStr);

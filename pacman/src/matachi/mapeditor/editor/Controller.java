@@ -64,16 +64,22 @@ public class Controller implements ActionListener, GUIInformation {
 	private LevelChecker levelChecker = new LevelChecker();
 	private GameChecker gameChecker = new GameChecker();
 
+	private Map currentMap = null;
+
 	/**
 	 * Construct the controller.
 	 */
-	public Controller(String mode, String filePath) {
+	public Controller(String modeStr, String filePath) {
 		//init(Constants.MAP_WIDTH, Constants.MAP_HEIGHT);
-		if (Objects.equals(mode, "TEST")){
-			this.mode = new TestMode(this, filePath);
+		String fullFilePath = null;
+		if (filePath!=null){
+			fullFilePath = new File(filePath).getPath();	// needed for loading/testing of files to work properly
+		}
+		if (Objects.equals(modeStr, "TEST")){
+			this.mode = new TestMode(this, fullFilePath);
 			System.out.println("Test mode");
-		} else if (Objects.equals(mode, "EDIT")){
-			this.mode = new EditMode(this, filePath);
+		} else if (Objects.equals(modeStr, "EDIT")){
+			this.mode = new EditMode(this, fullFilePath);
 			System.out.println("Edit mode");
 		}
 	}
@@ -110,7 +116,9 @@ public class Controller implements ActionListener, GUIInformation {
 		} else if (e.getActionCommand().equals("update")) {
 			updateGrid(gridWith, gridHeight);
 		} else if (e.getActionCommand().equals("test")) {
-			changeMode(new TestMode(this, "game"));
+			if (currentMap!=null){	// only test maps that have been loaded or saved
+				changeMode(new TestMode(this, currentMap.getFilePath()));
+			}
 		}
 	}
 
@@ -150,10 +158,6 @@ public class Controller implements ActionListener, GUIInformation {
 		int returnVal = chooser.showSaveDialog(null);
 		try {
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				// Apply level checking
-				levelChecker.performChecks(new Map(chooser.getSelectedFile().getName()));
-				//System.out.println(chooser.getSelectedFile().getName());
-
 				Element level = new Element("level");
 				Document doc = new Document(level);
 				doc.setRootElement(level);
@@ -196,13 +200,18 @@ public class Controller implements ActionListener, GUIInformation {
 
 						Element e = new Element("cell");
 						row.addContent(e.setText(type));
+
 					}
 					doc.getRootElement().addContent(row);
 				}
 				XMLOutputter xmlOutput = new XMLOutputter();
 				xmlOutput.setFormat(Format.getPrettyFormat());
-				xmlOutput
-						.output(doc, new FileWriter(chooser.getSelectedFile()));
+				xmlOutput.output(doc, new FileWriter(chooser.getSelectedFile()));
+
+				// Apply level checking
+				Map map = new Map(chooser.getSelectedFile().getName(), chooser.getSelectedFile().getPath());
+				levelChecker.performChecks(map);
+				currentMap = map;
 			}
 		} catch (FileNotFoundException e1) {
 			JOptionPane.showMessageDialog(null, "Invalid file!", "error",
@@ -280,8 +289,9 @@ public class Controller implements ActionListener, GUIInformation {
 					}
 
 					// Apply level checking
-					levelChecker.performChecks( new Map(selectedFile.getName()));
-					//System.out.println(chooser.getSelectedFile().getName());
+					Map map = new Map(selectedFile.getName(), selectedFile.getPath());
+					levelChecker.performChecks( map);
+					currentMap = map;
 
 					grid.redrawGrid();
 				}
