@@ -22,12 +22,13 @@ public class GameChecker {
     }
 
     public boolean performChecks(String gameFolderFilePath){
+        boolean allChecksValid = true;
         for (GameCheck gameCheck : gameChecks){
             boolean isValid = gameCheck.check(gameFolderFilePath);
             if (!isValid){
-                return false;
+                allChecksValid = false;
             }
         }
-        return true;
+        return allChecksValid;
     }
 }

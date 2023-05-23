@@ -35,8 +35,15 @@ public class MapUniqueNumberCheck extends GameCheck {
         for (ArrayList array : levelMapsByNumber.values()){
             if (array.size()>1){
                 StringBuilder str = new StringBuilder("Game " + gameFolderFilePath + " – – multiple maps at same level: ");
-                for (Object filename : array){
-                    String positionStr = String.format("%s; ", filename.toString());
+                for (int i=0; i<array.size(); i++){
+                    Object filename = array.get(i);
+                    String positionStr;
+                    if (i==array.size()-1){
+                        positionStr = String.format("%s; ", filename.toString());
+                    }
+                    else {
+                        positionStr = String.format("%s", filename.toString());
+                    }
                     str.append(positionStr);
                 }
                 logCheckFailure(str.toString());;
