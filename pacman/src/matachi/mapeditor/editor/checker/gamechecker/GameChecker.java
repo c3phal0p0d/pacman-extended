@@ -10,7 +10,9 @@ public class GameChecker {
     private ArrayList<GameCheck> gameChecks;
     private FileWriter fileWriter;
 
-    public GameChecker(){
+    private static GameChecker instance = null;
+
+    private GameChecker(){
         try {
             fileWriter = new FileWriter(new File(logFilePath));
         } catch (IOException ex) {
@@ -19,6 +21,13 @@ public class GameChecker {
         gameChecks = new ArrayList<GameCheck>();
         gameChecks.add(new OneCorrectlyNamedMapCheck(this));
         gameChecks.add(new MapUniqueNumberCheck(this));
+    }
+
+    public static GameChecker getInstance() {
+        if(instance == null) {
+            instance = new GameChecker();
+        }
+        return instance;
     }
 
     public boolean performChecks(String gameFolderFilePath){

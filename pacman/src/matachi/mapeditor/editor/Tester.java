@@ -4,6 +4,7 @@ import src.Game;
 import src.Map;
 import src.matachi.mapeditor.editor.checker.gamechecker.GameChecker;
 import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
+import src.matachi.mapeditor.editor.testerstrategy.TesterStrategy;
 import src.utility.GameCallback;
 import src.utility.PropertiesLoader;
 
@@ -12,20 +13,39 @@ import java.util.*;
 
 import static src.Driver.DEFAULT_PROPERTIES_PATH;
 
-public class TestMode extends Mode {
+public class Tester {
     LevelChecker levelChecker;
     GameChecker gameChecker;
 
-    public TestMode(Controller controller, String filePath) {
-        super(controller, filePath);
+    TesterStrategy testerStrategy;
 
-        if (filePath==null){
-            controller.changeMode(new EditMode(controller, null));
+    public Tester(String filePath, TesterStrategy testerStrategy) {
+
+        this.gameChecker = GameChecker.getInstance();
+        this.levelChecker = LevelChecker.getInstance();
+        this.testerStrategy = testerStrategy;
+
+        // Apply Game Checks
+        boolean isGameValid = gameChecker.performChecks(filePath);
+
+        // Game is valid, load and test the maps
+        if(isGameValid) {
+            testerStrategy.test(filePath);
+        }
+        // Game is invalid, go back to editor
+        else {
+            System.out.println("Failed game checks");
+
+            // If checks fail, return to edit mode with no map
+            testerStrategy.changeMode(null);
         }
 
-        File file = new File(filePath);
+    }
+}
 
-        // Game folder is being tested
+/*
+
+// Game folder is being tested
         if (file.isDirectory()){
             // Convert .xml files to Maps
             ArrayList<Map> maps = new ArrayList<>();
@@ -37,12 +57,10 @@ public class TestMode extends Mode {
                 }
             }
 
-            // Apply game & level checking
-            boolean isGameValid = controller.getGameChecker().performChecks(filePath);
-
+            // Apply level checking to all maps
             boolean areLevelsValid = true;
             for (Map map: maps){
-                if (!controller.getLevelChecker().performChecks(map)){
+                if (!levelChecker.performChecks(map)){
                     areLevelsValid = false;
                 }
             }
@@ -60,13 +78,13 @@ public class TestMode extends Mode {
                 }
 
                 // After tests are done, return to edit mode with no map
-                controller.changeMode(new EditMode(controller, null));
+                changeMode(new Editor(editor, null));
 
             } else {
                 System.out.println("Failed game & level checks");
 
                 // If checks fail, return to edit mode with no map
-                controller.changeMode(new EditMode(controller, null));
+                changeMode(new Editor(editor, null));
             }
         }
 
@@ -76,7 +94,7 @@ public class TestMode extends Mode {
             Map map = new Map(file.getName(), file.getPath());
 
             // Apply level checking
-            boolean isLevelValid = controller.getLevelChecker().performChecks(map);
+            boolean isLevelValid = editor.getLevelChecker().performChecks(map);
 
             // If checks succeed, run game with that level map
             if (isLevelValid){
@@ -87,13 +105,12 @@ public class TestMode extends Mode {
                 new Game(gameCallback, properties, map);
 
                 // After test is done, return to edit mode with map open
-                controller.changeMode(new EditMode(controller, filePath));
+                editor.changeMode(new Editor(editor, filePath));
             } else {
                 System.out.println("Failed game & level checks");
 
                 // If checks fail, return to edit mode with map open
-                controller.changeMode(new EditMode(controller, filePath));
+                editor.changeMode(new Editor(editor, filePath));
             }
         }
-    }
-}
+ */

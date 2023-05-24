@@ -12,7 +12,9 @@ public class LevelChecker {
     private ArrayList<LevelCheck> levelChecks;
     private FileWriter fileWriter;
 
-    public LevelChecker(){
+    private static LevelChecker instance = null;
+
+    private LevelChecker(){
         try {
             fileWriter = new FileWriter(new File(logFilePath));
         } catch (IOException ex) {
@@ -22,6 +24,13 @@ public class LevelChecker {
         levelChecks.add(new OneStartingPointCheck(this));
         levelChecks.add(new PortalPairCheck(this));
         levelChecks.add(new TwoItemCheck(this));
+    }
+
+    public static LevelChecker getInstance() {
+        if(instance == null) {
+            instance = new LevelChecker();
+        }
+        return instance;
     }
 
     public boolean performChecks(Map map){

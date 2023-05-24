@@ -1,15 +1,9 @@
 package src;
 
-import src.utility.GameCallback;
-import src.utility.PropertiesLoader;
 import src.matachi.mapeditor.editor.Controller;
+import src.matachi.mapeditor.editor.Editor;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.InvalidPropertiesFormatException;
-import java.util.Properties;
 
 public class Driver {
     public static final String DEFAULT_PROPERTIES_PATH = "properties/test2.properties";
@@ -42,7 +36,7 @@ public class Driver {
             System.out.println("no args provided");
             mode = "EDIT";
         }
-        new Controller(mode, filePath);   // open editor
+        new Controller(mode, filePath);   // open application
 
         // Comment previous code & uncomment the following in order to test a specific map without going through level/game checking
 //        String propertiesPath = DEFAULT_PROPERTIES_PATH;

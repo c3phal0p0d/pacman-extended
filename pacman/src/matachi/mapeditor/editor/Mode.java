@@ -1,12 +1,17 @@
 package src.matachi.mapeditor.editor;
 
 public abstract class Mode {
-    Controller controller;
+    Editor editor;
     String filePath;
 
-    public Mode(Controller controller, String filePath){
-        this.controller = controller;
+    public Mode(Editor editor, String filePath){
+        this.editor = editor;
         this.filePath = filePath;
     }
 
+    public void updateGrid(int width, int height) {
+        editor.getView().close();
+        editor.init(width, height);
+        editor.getView().setSize(width, height);
+    }
 }
