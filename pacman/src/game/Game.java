@@ -63,7 +63,7 @@ public class Game extends GameGrid
         map.drawMap(this, bg);
 
         // STEP 5: Initialise entities
-        createEntityManager(seed);
+        createEntityManager(seed, this.map);
 
         // STEP 6: Setup Random seeds
         seed = Integer.parseInt(properties.getProperty("seed"));
@@ -110,9 +110,8 @@ public class Game extends GameGrid
      * INSTANTIATES an instance of the Entity Manager.
      * @param seed  RNG seed for 'PacActor'
      */
-    private void createEntityManager(int seed) {
-        entityManager = new EntityManager(this, itemManager);
-        entityManager.createPacActor(this);
+    private void createEntityManager(int seed, Map map) {
+        entityManager = new EntityManager(this, itemManager, properties, map);
         entityManager.setSeed(seed);
         entityManager.setSlowDown(3);
     }

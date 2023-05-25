@@ -176,8 +176,6 @@ public class ItemManager {
         {
             for (int x = 0; x < game.getNumHorzCells(); x++)
             {
-                System.out.println("x: " + x + " " + "y: " + y);
-
                 // STEP 2: Extract the current location
                 Location location = new Location(x, y);
                 int a = map.getCell(location);

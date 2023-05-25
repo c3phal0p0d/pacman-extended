@@ -50,7 +50,7 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
      * INSTANTIATES an instance of 'PacActor'.
      * @param game Contains the information associated with 'PacActor' attributes
      */
-    public PacActor(Game game)
+    public PacActor(Game game, Location location)
     {
         // STEP 1: Assign attributes
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
@@ -63,10 +63,7 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
         this.playerController = new PlayerController(this);
 
         // STEP 2: Set up locations
-        String[] pacManLocations = game.getProperties().getProperty("PacMan.location").split(",");
-        int pacManX = Integer.parseInt(pacManLocations[0]);
-        int pacManY = Integer.parseInt(pacManLocations[1]);
-        game.addActor(this, new Location(pacManX, pacManY));
+        game.addActor(this, location);
     }
 
     /**

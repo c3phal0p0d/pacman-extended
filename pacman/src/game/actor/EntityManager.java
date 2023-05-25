@@ -2,9 +2,9 @@ package src.game.actor;
 
 import ch.aplu.jgamegrid.Location;
 import src.game.Game;
-import src.game.actor.items.Item;
+import src.game.Map;
 import src.game.actor.items.ItemManager;
-import src.game.actor.items.ItemManager;
+import src.matachi.mapeditor.editor.Constants;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -32,24 +32,53 @@ public class EntityManager {
      * @param game          The specifications of the board
      * @param itemManager   An instance of the 'ItemManager'
      */
-    public EntityManager(Game game, ItemManager itemManager) {
+    public EntityManager(Game game, ItemManager itemManager, Properties properties, Map map) {
 
-        this.properties = game.getProperties();
+        this.properties = properties;
         this.itemManager = itemManager;
 
-        // STEP 1: Initialise monsters
-        createTroll(game);
-        createTX5(game);
+        // STEP 1: Find and initialize map monsters
+        initializeMapEntities(game, map);
+    }
+
+    /**
+     * Searches the map object to find the monsters on the map and adds them to an array of monsters
+     * @param map
+     */
+    private void initializeMapEntities(Game game, Map map) {
+        int width = map.getWidth();
+        int height = map.getHeight();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                // STEP 2: Extract the current location
+                Location location = new Location(x, y);
+                int a = map.getCell(location);
+
+                // STEP 3: Found an entity
+                // CASE A: Found a Troll
+                if(a == Constants.TROLL_TILE_CHAR) {
+                    createTroll(game, location);
+                }
+                // CASE B: Found a TX5
+                else if(a == Constants.TX5_TILE_CHAR) {
+                    createTX5(game, location);
+                }
+                else if(a == Constants.PAC_TILE_CHAR) {
+                    createPacActor(game, location);
+                }
+            }
+        }
     }
 
     /**
      * CREATES an instance of 'PacActor'.
      * @param game  The game the new 'PacActor' instance will reside in
      */
-    public void createPacActor(Game game) {
+    public void createPacActor(Game game, Location location) {
 
         // STEP 1: Create the 'PacActor' instance
-        pacActor = new PacActor(game);
+        pacActor = new PacActor(game, location);
 
         // STEP 2: Setup automatic settings
         pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
@@ -62,16 +91,13 @@ public class EntityManager {
      * CREATES an instance of a 'Troll'.
      * @param game  The game the new 'Troll' instance will reside in
      */
-    private void createTroll(Game game) {
+    private void createTroll(Game game, Location location) {
 
         // STEP 1: Create the 'Troll'
         Troll troll = new Troll(game.getGameCallback(), game.getNumHorzCells(), game.getNumVertCells());
 
         // STEP 2: Initialise the Troll's locations
-        String[] trollLocations = properties.getProperty("Troll.location").split(",");
-        int trollX = Integer.parseInt(trollLocations[0]);
-        int trollY = Integer.parseInt(trollLocations[1]);
-        game.addActor(troll, new Location(trollX, trollY), Location.NORTH);
+        game.addActor(troll, location, Location.NORTH);
         monsters.add(troll);
     }
 
@@ -79,16 +105,13 @@ public class EntityManager {
      * CREATES an instance of a 'TX5'.
      * @param game  The game the new 'TX5' instance will reside in
      */
-    private void createTX5(Game game) {
+    private void createTX5(Game game, Location location) {
 
         // STEP 1: Create the 'TX5'
         TX5 tx5 = new TX5(game.getGameCallback(), this, game.getNumHorzCells(), game.getNumVertCells());
 
         // STEP 2: Initialise the TX5's locations
-        String[] tx5Locations = properties.getProperty("TX5.location").split(",");
-        int tx5X = Integer.parseInt(tx5Locations[0]);
-        int tx5Y = Integer.parseInt(tx5Locations[1]);
-        game.addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
+        game.addActor(tx5, location, Location.NORTH);
 
         // STEP 3: Ensure TX-5 doesn't move for the first 5 seconds
         tx5.stopMoving(5);
