@@ -1,7 +1,6 @@
-package src.game;
+package src;
 
 import src.matachi.mapeditor.editor.Controller;
-import src.matachi.mapeditor.editor.Editor;
 
 import java.io.File;
 

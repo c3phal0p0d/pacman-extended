@@ -2,15 +2,15 @@ package src.matachi.mapeditor.editor.testerstrategy;
 
 import src.game.Game;
 import src.game.Map;
-import src.utility.GameCallback;
-import src.utility.PropertiesLoader;
+import src.game.utility.GameCallback;
+import src.game.utility.PropertiesLoader;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Properties;
 
-import static src.game.Driver.DEFAULT_PROPERTIES_PATH;
+import static src.Driver.DEFAULT_PROPERTIES_PATH;
 
 public class MapFolderTesterStrategy extends TesterStrategy {
 

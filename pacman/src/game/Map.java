@@ -1,10 +1,13 @@
 package src.game;
 
+import ch.aplu.jgamegrid.GGBackground;
+import ch.aplu.jgamegrid.Location;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import src.matachi.mapeditor.editor.Constants;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -77,6 +80,53 @@ public class Map {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void drawMap(Game game, GGBackground bg)
+    {
+        // STEP 1: Loop through each location on the board
+        bg.clear(Color.gray);
+        bg.setPaintColor(Color.white);
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                // STEP 2: Extract the location
+                bg.setPaintColor(Color.white);
+                Location location = new Location(x, y);
+                int c = getCell(location);
+
+                // Tile that isn't a wall, make it a path tile
+                if (c != Constants.WALL_TILE_CHAR) {
+                    bg.fillCell(location, Color.lightGray);
+                }
+
+                // CASE 3A: Place a PILL
+                if (c == Constants.PILL_TILE_CHAR) {
+                    game.getItemManager().putPill(location, game);
+
+
+                // CASE 3B: Place a GOLD item
+                } else if (c == Constants.GOLD_TILE_CHAR) {
+                    game.getItemManager().putGold(location, game);
+
+                // CASE 3C: Place an ICE item
+                } else if (c == Constants.ICE_TILE_CHAR) {
+                    game.getItemManager().putIce(location, game);
+                }
+            }
+        }
+//        for (Location location : game.getItemManager().getPropertyPillLocations()) {
+//            game.getItemManager().putPill(location, game);
+//        }
+//        for (Location location : game.getItemManager().getPropertyGoldLocations()) {
+//            game.getItemManager().putGold(location, game);
+//        }
+    }
+
+    public int getCell(Location location)
+    {
+        return grid[location.x][location.y];
     }
 
     public char getTile(int x, int y){
