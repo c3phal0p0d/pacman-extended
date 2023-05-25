@@ -8,6 +8,7 @@ import ch.aplu.jgamegrid.GameGrid;
 import ch.aplu.jgamegrid.Location;
 import src.game.actor.EntityManager;
 import src.game.actor.items.ItemManager;
+import src.game.actor.portals.PortalManager;
 import src.game.utility.GameCallback;
 
 import java.awt.*;
@@ -30,6 +31,7 @@ public class Game extends GameGrid
     private Map map;
     private EntityManager entityManager;
     private ItemManager itemManager;
+    private PortalManager portalManager;
     private GameCallback gameCallback;
     private Properties properties;
     private int seed = 30006;
@@ -62,33 +64,43 @@ public class Game extends GameGrid
         GGBackground bg = getBg();
         map.drawMap(this, bg);
 
-        // STEP 5: Initialise entities
-        createEntityManager(seed, this.map);
+        // STEP 5: Initialise portals
+        portalManager = new PortalManager(this, map);
 
-        // STEP 6: Setup Random seeds
+        // STEP 6: Initialise entities
+        createEntityManager(seed, this.map);
+        // Must be called after creating monster manager so that entities are rendered on top of portals
+        portalManager.setEntities(this);
+
+
+        // STEP 7: Setup Random seeds
         seed = Integer.parseInt(properties.getProperty("seed"));
         setKeyRepeatPeriod(150);
 
-        // STEP 7: Run the game
+        // STEP 8: Run the game
         doRun();
         show();
 
-        // STEP 8: Loop to look for collision in the application thread
+        // STEP 9: Loop to look for collision in the application thread
         boolean hasPacmanBeenHit;
         boolean hasPacmanEatAllPills;
+        boolean hasPortals = portalManager.getIsTherePortals();
         do {
             hasPacmanBeenHit = entityManager.hasThereBeenACollision();
             hasPacmanEatAllPills = entityManager.hasEatenAllPills();
+            if(hasPortals) {
+                portalManager.hasThereBeenATeleport(this);
+            }
             delay(10);
         } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
 
-        // STEP 9: Game is finished, terminate the entities
+        // STEP 10: Game is finished, terminate the entities
         delay(120);
         Location loc = entityManager.getPacActorLocation();
         entityManager.stopMonsters();
         entityManager.removePacActor();
 
-        // STEP 10: Display the outcome of the game
+        // STEP 11: Display the outcome of the game
         String title = "";
         if (hasPacmanBeenHit) {
             bg.setPaintColor(Color.red);

@@ -229,6 +229,7 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     public int getNbPills() {
         return nbPills;
     }
+    public int getScore() { return score; }
     public void setAuto(boolean auto) {
         isAuto = auto;
     }

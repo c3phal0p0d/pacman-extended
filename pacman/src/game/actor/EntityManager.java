@@ -1,5 +1,6 @@
 package src.game.actor;
 
+import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
 import src.game.Game;
 import src.game.Map;
@@ -203,5 +204,14 @@ public class EntityManager {
     }
     public void removePacActor() {
         pacActor.removeSelf();
+    }
+
+    public ArrayList<Actor> getEntities() {
+        ArrayList<Actor> entities = new ArrayList<>();
+        for(Monster monster: monsters) {
+            entities.add(monster);
+        }
+        entities.add(pacActor);
+        return entities;
     }
 }

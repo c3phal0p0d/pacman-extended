@@ -135,34 +135,6 @@ public class ItemManager {
         }
     }
 
-//    /**
-//     * READS the pill & gold locations given to the 'Game' class.
-//     * @param properties  The properties to be read from
-//     */
-//    public void loadPillAndItemsLocations(Properties properties) {
-//
-//        // STEP 1: Read the pills into 'propertyPillLocations'
-//        String pillsLocationString = properties.getProperty("Pills.location");
-//        if (pillsLocationString != null) {
-//            String[] singlePillLocationStrings = pillsLocationString.split(";");
-//            for (String singlePillLocationString: singlePillLocationStrings) {
-//                String[] locationStrings = singlePillLocationString.split(",");
-//                propertyPillLocations.add(new Location(Integer.parseInt(locationStrings[0]),
-//                                                                        Integer.parseInt(locationStrings[1])));
-//            }
-//        }
-//        // STEP 2: Read the pills into 'propertyGoldLocations'
-//        String goldLocationString = properties.getProperty("Gold.location");
-//        if (goldLocationString != null) {
-//            String[] singleGoldLocationStrings = goldLocationString.split(";");
-//            for (String singleGoldLocationString: singleGoldLocationStrings) {
-//                String[] locationStrings = singleGoldLocationString.split(",");
-//                propertyGoldLocations.add(new Location(Integer.parseInt(locationStrings[0]),
-//                                                                        Integer.parseInt(locationStrings[1])));
-//            }
-//        }
-//    }
-
     /**
      * ADDS the pill, gold & ice locations.
      * @param game  Used to get 'grid' of the game
