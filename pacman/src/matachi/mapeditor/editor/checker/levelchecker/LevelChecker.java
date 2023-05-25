@@ -34,13 +34,14 @@ public class LevelChecker {
     }
 
     public boolean performChecks(Map map){
+        boolean allChecksValid = true;
         for (LevelCheck levelCheck : levelChecks){
             boolean isValid = levelCheck.check(map);
             if (!isValid){
-                return false;
+                allChecksValid = false;
             }
         }
-        return true;
+        return allChecksValid;
     }
 
     public FileWriter getFileWriter() {

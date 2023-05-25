@@ -40,8 +40,14 @@ public class OneStartingPointCheck implements LevelCheck {
         else if (count>1){
             // log error: [Level 5_levelname.xml – more than one start for Pacman: (3,7); (8, 1); (5, 2)]
             StringBuilder str = new StringBuilder("Level " + map.getName() + " - more than one start for PacMan: ");
-            for (int[] position: pacmanPositions){
-                String positionStr = String.format("(%d, %d); ", position[0], position[1]);
+            for (int i=0; i<pacmanPositions.size(); i++){
+                int[] position = pacmanPositions.get(i);
+                String positionStr;
+                if (i==pacmanPositions.size()-1){
+                    positionStr = String.format("(%d,%d)", position[0]+1, position[1]+1);
+                } else {
+                    positionStr = String.format("(%d,%d); ", position[0]+1, position[1]+1);
+                }
                 str.append(positionStr);
             }
             logCheckFailure(levelChecker.getFileWriter(), str.toString());

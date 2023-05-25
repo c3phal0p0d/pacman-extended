@@ -48,8 +48,14 @@ public class PortalPairCheck implements LevelCheck {
         if (whiteCount>0&&whiteCount!=2){
             // log error
             StringBuilder str = new StringBuilder("Level " + map.getName() + " - portal White count is not 2: ");
-            for (int[] position: whitePositions){
-                String positionStr = String.format("(%d, %d); ", position[0], position[1]);
+            for (int i=0; i<whitePositions.size(); i++){
+                int[] position = whitePositions.get(i);
+                String positionStr;
+                if (i==whitePositions.size()-1){
+                    positionStr = String.format("(%d,%d)", position[0]+1, position[1]+1);
+                } else {
+                    positionStr = String.format("(%d,%d); ", position[0]+1, position[1]+1);
+                }
                 str.append(positionStr);
             }
             logCheckFailure(levelChecker.getFileWriter(), str.toString());
@@ -59,8 +65,14 @@ public class PortalPairCheck implements LevelCheck {
         if (yellowCount>0&&yellowCount!=2){
             // log error
             StringBuilder str = new StringBuilder("Level " + map.getName() + " - portal Yellow count is not 2: ");
-            for (int[] position: yellowPositions){
-                String positionStr = String.format("(%d, %d); ", position[0], position[1]);
+            for (int i=0; i<yellowPositions.size(); i++){
+                int[] position = yellowPositions.get(i);
+                String positionStr;
+                if (i==yellowPositions.size()-1){
+                    positionStr = String.format("(%d,%d)", position[0]+1, position[1]+1);
+                } else {
+                    positionStr = String.format("(%d,%d); ", position[0]+1, position[1]+1);
+                }
                 str.append(positionStr);
             }
             logCheckFailure(levelChecker.getFileWriter(), str.toString());
@@ -70,8 +82,14 @@ public class PortalPairCheck implements LevelCheck {
         if (darkGoldCount>0&&darkGoldCount!=2){
             // log error
             StringBuilder str = new StringBuilder("Level " + map.getName() + " - portal Dark Gold count is not 2: ");
-            for (int[] position: darkGoldPositions){
-                String positionStr = String.format("(%d, %d); ", position[0], position[1]);
+            for (int i=0; i<darkGoldPositions.size(); i++){
+                int[] position = darkGoldPositions.get(i);
+                String positionStr;
+                if (i==darkGoldPositions.size()-1){
+                    positionStr = String.format("(%d,%d)", position[0]+1, position[1]+1);
+                } else {
+                    positionStr = String.format("(%d,%d); ", position[0]+1, position[1]+1);
+                }
                 str.append(positionStr);
             }
             logCheckFailure(levelChecker.getFileWriter(), str.toString());
@@ -81,8 +99,14 @@ public class PortalPairCheck implements LevelCheck {
         if (darkGrayCount>0&&darkGrayCount!=2){
             // log error
             StringBuilder str = new StringBuilder("Level " + map.getName() + " - portal Dark Gray count is not 2: ");
-            for (int[] position: darkGrayPositions){
-                String positionStr = String.format("(%d, %d); ", position[0], position[1]);
+            for (int i=0; i<darkGrayPositions.size(); i++){
+                int[] position = darkGrayPositions.get(i);
+                String positionStr;
+                if (i==darkGrayPositions.size()-1){
+                    positionStr = String.format("(%d,%d)", position[0]+1, position[1]+1);
+                } else {
+                    positionStr = String.format("(%d,%d); ", position[0]+1, position[1]+1);
+                }
                 str.append(positionStr);
             }
             logCheckFailure(levelChecker.getFileWriter(), str.toString());
