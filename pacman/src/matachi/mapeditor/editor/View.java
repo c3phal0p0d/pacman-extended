@@ -165,7 +165,7 @@ public class View {
 	}
 
 	public void close() {
-		frame.setVisible(false);
+		frame.dispose();
 	}
 	// /**
 	// * Flip the grid on or off.

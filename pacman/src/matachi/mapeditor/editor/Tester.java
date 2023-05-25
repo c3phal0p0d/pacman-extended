@@ -1,22 +1,12 @@
 package src.matachi.mapeditor.editor;
 
-import src.Game;
-import src.Map;
 import src.matachi.mapeditor.editor.checker.gamechecker.GameChecker;
 import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 import src.matachi.mapeditor.editor.testerstrategy.TesterStrategy;
-import src.utility.GameCallback;
-import src.utility.PropertiesLoader;
-
-import java.io.File;
-import java.util.*;
-
-import static src.Driver.DEFAULT_PROPERTIES_PATH;
 
 public class Tester {
     LevelChecker levelChecker;
     GameChecker gameChecker;
-
     TesterStrategy testerStrategy;
 
     public Tester(String filePath, TesterStrategy testerStrategy) {
@@ -30,6 +20,7 @@ public class Tester {
 
         // Game is valid, load and test the maps
         if(isGameValid) {
+            System.out.println("Game checks succeeded");
             testerStrategy.test(filePath);
         }
         // Game is invalid, go back to editor

@@ -1,4 +1,4 @@
-package src;
+package src.game;
 
 import src.matachi.mapeditor.editor.Controller;
 import src.matachi.mapeditor.editor.Editor;

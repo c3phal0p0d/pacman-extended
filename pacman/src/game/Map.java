@@ -1,11 +1,10 @@
-package src;
+package src.game;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import src.matachi.mapeditor.editor.Constants;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

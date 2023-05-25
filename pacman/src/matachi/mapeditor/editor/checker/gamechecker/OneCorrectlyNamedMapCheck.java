@@ -13,19 +13,30 @@ public class OneCorrectlyNamedMapCheck implements GameCheck {
     }
 
     @Override
-    public boolean check(String gameFolderFilePath) {
-        File gameFolder = new File(gameFolderFilePath);
-        File[] mapFiles = gameFolder.listFiles();
-        if (mapFiles != null) {
-            for (File mapFile : mapFiles) {
-                String filename = mapFile.getName();
-                if (filename.endsWith(".xml")&&Character.isDigit(filename.charAt(0))){  // is .xml file starting with an integer
-                    return true;
+    public boolean check(String filePath) {
+        File file = new File(filePath);
+        if(file.isFile()) {
+            String filename = file.getName();
+            if (filename.endsWith(".xml")&&Character.isDigit(filename.charAt(0))){
+                return true;
+            }
+        }
+        else if(file.isDirectory()) {
+            File[] mapFiles = file.listFiles();
+
+            if (mapFiles != null) {
+                for (File mapFile : mapFiles) {
+                    String filename = mapFile.getName();
+                    // is .xml file starting with an integer
+                    if (filename.endsWith(".xml")&&Character.isDigit(filename.charAt(0))){
+                        return true;
+                    }
                 }
             }
         }
+
         // log error
-        String str = "Game " + gameFolderFilePath + " – no maps found";
+        String str = "[Game " + filePath + " – no maps found]";
         logCheckFailure(gameChecker.getFileWriter(), str);
 
         return false;

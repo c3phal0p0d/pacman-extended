@@ -1,6 +1,6 @@
 // PacActor.java
 // Used for PacMan
-package src;
+package src.game;
 
 import ch.aplu.jgamegrid.*;
 import java.awt.event.KeyEvent;
@@ -27,6 +27,7 @@ public class PacActor extends Actor implements GGKeyRepeatListener
   {
     super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
     this.game = game;
+    this.setGameGrid(game);
   }
   private boolean isAuto = false;
 

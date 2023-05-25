@@ -1,9 +1,8 @@
 package src.matachi.mapeditor.editor.checker.levelchecker;
 
-import src.Map;
+import src.game.Map;
 import src.matachi.mapeditor.editor.Constants;
 
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 /* Checks that there is exactly one starting point for PacMan */

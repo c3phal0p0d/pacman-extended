@@ -1,15 +1,14 @@
 package src.matachi.mapeditor.editor.testerstrategy;
 
-import src.Game;
-import src.Map;
-import src.matachi.mapeditor.editor.Editor;
+import src.game.Game;
+import src.game.Map;
 import src.utility.GameCallback;
 import src.utility.PropertiesLoader;
 
 import java.io.File;
 import java.util.Properties;
 
-import static src.Driver.DEFAULT_PROPERTIES_PATH;
+import static src.game.Driver.DEFAULT_PROPERTIES_PATH;
 
 public class SingleMapTesterStrategy extends TesterStrategy {
 
@@ -36,7 +35,7 @@ public class SingleMapTesterStrategy extends TesterStrategy {
             // After test is done, return to edit mode with map open
             changeMode(filePath);
         } else {
-            System.out.println("Failed game & level checks");
+            System.out.println("Failed level checks");
 
             // If checks fail, return to edit mode with map open
             changeMode(filePath);

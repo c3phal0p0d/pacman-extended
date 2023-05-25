@@ -1,8 +1,7 @@
 package src.matachi.mapeditor.editor.checker.levelchecker;
 
-import src.Map;
+import src.game.Map;
 
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 /* Checks that there are exactly two tiles for each portal appearing on the map */

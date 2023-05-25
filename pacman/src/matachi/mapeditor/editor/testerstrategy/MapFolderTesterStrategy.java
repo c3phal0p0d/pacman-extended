@@ -1,8 +1,7 @@
 package src.matachi.mapeditor.editor.testerstrategy;
 
-import src.Game;
-import src.Map;
-import src.matachi.mapeditor.editor.Editor;
+import src.game.Game;
+import src.game.Map;
 import src.utility.GameCallback;
 import src.utility.PropertiesLoader;
 
@@ -11,9 +10,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Properties;
 
-import static src.Driver.DEFAULT_PROPERTIES_PATH;
+import static src.game.Driver.DEFAULT_PROPERTIES_PATH;
 
 public class MapFolderTesterStrategy extends TesterStrategy {
+
+    private int currentGameIndex = 0;
+    private int maxMapIndex;
+    private ArrayList<Map> maps = new ArrayList<>();
+    private Properties properties;
 
     @Override
     public void test(String filePath) {
@@ -21,7 +25,6 @@ public class MapFolderTesterStrategy extends TesterStrategy {
         File file = new File(filePath);
 
         // Convert .xml files to Maps
-        ArrayList<Map> maps = new ArrayList<>();
         File gameFolder = file;
         File[] mapFiles = gameFolder.listFiles();
         if (mapFiles != null) {
@@ -29,6 +32,7 @@ public class MapFolderTesterStrategy extends TesterStrategy {
                 maps.add(new Map(mapFile.getName(), mapFile.getPath()));
             }
         }
+        maxMapIndex = maps.size() - 1;
 
         // Apply level checking to all maps
         boolean areLevelsValid = true;
@@ -40,23 +44,33 @@ public class MapFolderTesterStrategy extends TesterStrategy {
 
         // If checks succeed, run game for all level maps
         if (areLevelsValid){
-            System.out.println("Game and level checks succeeded");
+            System.out.println("Level checks succeeded");
             maps.sort(Comparator.comparing(Map::getFilePath));
-            String propertiesPath = DEFAULT_PROPERTIES_PATH;
-            final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
-            GameCallback gameCallback = new GameCallback();
+            properties = PropertiesLoader.loadPropertiesFile(DEFAULT_PROPERTIES_PATH);
 
-            for (Map map : maps){
-                new Game(gameCallback, properties, map);
-            }
-
-            // After tests are done, return to edit mode with no map
-            changeMode(null);
-
+            startNextMap();
         } else {
-            System.out.println("Failed game & level checks");
+            System.out.println("Failed level checks");
 
             // If checks fail, return to edit mode with no map
+            changeMode(null);
+        }
+    }
+
+    private void startNextMap() {
+        Map map = maps.get(currentGameIndex);
+        GameCallback gameCallback = new GameCallback();
+        currentGameIndex++;
+        Game game = new Game(gameCallback, properties, map); // run game
+        if(currentGameIndex <= maxMapIndex) { // Final map hasn't been played
+            if(game.getIsPlayerAlive()) { // Player is still alive
+                startNextMap();
+            }
+            else {
+                changeMode(null);
+            }
+        }
+        else {
             changeMode(null);
         }
     }

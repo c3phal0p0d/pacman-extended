@@ -1,6 +1,6 @@
 // PacMan.java
 // Simple PacMan implementation
-package src;
+package src.game;
 
 import ch.aplu.jgamegrid.*;
 import src.matachi.mapeditor.editor.Constants;
@@ -17,8 +17,8 @@ public class Game extends GameGrid
   protected Map map;
 
   protected PacActor pacActor = new PacActor(this);
-  private Monster troll = new Monster(this, MonsterType.Troll);
-  private Monster tx5 = new Monster(this, MonsterType.TX5);
+  private Monster troll = new Monster(this, MonsterType.Troll);;
+  private Monster tx5 = new Monster(this, MonsterType.TX5);;
 
   private ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
   private ArrayList<Actor> iceCubes = new ArrayList<Actor>();
@@ -28,6 +28,7 @@ public class Game extends GameGrid
   private int seed = 30006;
   private ArrayList<Location> propertyPillLocations = new ArrayList<>();
   private ArrayList<Location> propertyGoldLocations = new ArrayList<>();
+  private boolean isPlayerAlive = true;
 
   public Game(GameCallback gameCallback, Properties properties, Map map)
   {
@@ -52,14 +53,47 @@ public class Game extends GameGrid
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
     pacActor.setSeed(seed);
-    troll.setSeed(seed);
-    tx5.setSeed(seed);
+
     addKeyRepeatListener(pacActor);
     setKeyRepeatPeriod(150);
-    troll.setSlowDown(3);
-    tx5.setSlowDown(3);
     pacActor.setSlowDown(3);
+
+    troll.setSeed(seed);
+    troll.setSlowDown(3);
+    tx5.setSeed(seed);
+    tx5.setSlowDown(3);
     tx5.stopMoving(5);
+
+    // Go through grid finding all PacMan's starting points & add them to array
+//    ArrayList<Integer> monster_tiles = new ArrayList<Integer>();
+//    for (int y=0; y<map.getHeight(); y++) {
+//      for (int x = 0; x < map.getWidth(); x++) {
+//        if (map.getTile(x, y)==Constants.TROLL_TILE_CHAR){
+//          monster_tiles.add(Constants.TROLL_TILE_CHAR);
+//        }
+//        else if(map.getTile(x, y)==Constants.TX5_TILE_CHAR) {
+//          monster_tiles.add(Constants.TX5_TILE_CHAR);
+//        }
+//      }
+//    }
+//
+//    ArrayList<Monster> monsters = new ArrayList<Monster>();
+//    // Map has monsters, initialize them
+//    if(monster_tiles.size() > 0) {
+//      for(int tile: monster_tiles) {
+//        if(tile == Constants.TROLL_TILE_CHAR)
+//        {
+//          Monster troll = new Monster(this, MonsterType.Troll);
+//
+//        }
+//        else if(tile == Constants.TX5_TILE_CHAR) {
+//          Monster tx5 = new Monster(this, MonsterType.TX5);
+//
+//          monsters.add(tx5);
+//        }
+//      }
+//    }
+
     setupActorLocations();
 
     //Run the game
@@ -67,14 +101,15 @@ public class Game extends GameGrid
     show();
     // Loop to look for collision in the application thread
     // This makes it improbable that we miss a hit
-    boolean hasPacmanBeenHit;
+    boolean hasPacmanBeenHit = false; // Always false when there are no monsters
     boolean hasPacmanEatAllPills;
     setupPillAndItemsLocations();
     int maxPillsAndItems = countPillsAndItems();
     
     do {
-      hasPacmanBeenHit = troll.getLocation().equals(pacActor.getLocation()) ||
-              tx5.getLocation().equals(pacActor.getLocation());
+
+      hasPacmanBeenHit = troll.getLocation().equals(pacActor.getLocation())
+              || tx5.getLocation().equals(pacActor.getLocation());
       hasPacmanEatAllPills = pacActor.getNbPills() >= maxPillsAndItems;
       delay(10);
     } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
@@ -90,6 +125,7 @@ public class Game extends GameGrid
       bg.setPaintColor(Color.red);
       title = "GAME OVER";
       addActor(new Actor("sprites/explosion3.gif"), loc);
+      killPlayer();
     } else if (hasPacmanEatAllPills) {
       bg.setPaintColor(Color.yellow);
       title = "YOU WIN";
@@ -98,6 +134,8 @@ public class Game extends GameGrid
     gameCallback.endOfGame(title);
 
     doPause();
+    delay(1000);
+    closeGame(); // Game is finished, dispose frame
   }
 
   public GameCallback getGameCallback() {
@@ -113,7 +151,6 @@ public class Game extends GameGrid
           addActor(tx5, new Location(x, y), Location.NORTH);
         } else if (map.getTile(x, y) == Constants.PAC_TILE_CHAR) {
           addActor(pacActor, new Location(x, y));
-
         }
       }
     }
@@ -265,5 +302,17 @@ public class Game extends GameGrid
   }
   public int getNumVertCells(){
     return this.nbVertCells;
+  }
+
+  public void closeGame() {
+    this.getFrame().dispose();
+  }
+
+  private void killPlayer() {
+    this.isPlayerAlive = false;
+  }
+
+  public boolean getIsPlayerAlive() {
+    return this.isPlayerAlive;
   }
 }

@@ -10,17 +10,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import src.Map;
-import src.matachi.mapeditor.editor.checker.gamechecker.GameChecker;
+import src.game.Map;
 import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 import src.matachi.mapeditor.editor.testerstrategy.MapFolderTesterStrategy;
 import src.matachi.mapeditor.editor.testerstrategy.SingleMapTesterStrategy;
+import src.matachi.mapeditor.editor.testerstrategy.TesterStrategy;
 import src.matachi.mapeditor.grid.Camera;
 import src.matachi.mapeditor.grid.Grid;
 import src.matachi.mapeditor.grid.GridCamera;
@@ -83,6 +82,7 @@ public class Editor implements ActionListener, GUIInformation {
 			}
 		}
 		grid.redrawGrid();
+		currentMap = map;
 	}
 
 	public void init(int width, int height) {
@@ -119,6 +119,10 @@ public class Editor implements ActionListener, GUIInformation {
 		} else if (e.getActionCommand().equals("test")) {
 			if (currentMap!=null){	// only test maps that have been loaded or saved
 				changeMode(currentMap.getFilePath());
+				view.close();
+			}
+			else {
+				System.out.println("Map needs to be either saved or loaded first");
 			}
 		}
 	}
@@ -211,7 +215,10 @@ public class Editor implements ActionListener, GUIInformation {
 
 				// Apply level checking
 				Map map = new Map(chooser.getSelectedFile().getName(), chooser.getSelectedFile().getPath());
-				levelChecker.performChecks(map);
+				boolean isLevelValid = levelChecker.performChecks(map);
+				if(!isLevelValid) {
+					System.out.println("Level check failed");
+				}
 				currentMap = map;
 			}
 		} catch (FileNotFoundException e1) {
@@ -303,10 +310,6 @@ public class Editor implements ActionListener, GUIInformation {
 	}
 
 	// Getter Methods
-	public LevelChecker getLevelChecker() {
-		return levelChecker;
-	}
-
 	public GridView getGrid(){
 		return grid;
 	}
@@ -324,12 +327,27 @@ public class Editor implements ActionListener, GUIInformation {
 	}
 
 	public void changeMode(String filePath){
+
+		// Close editor window
+		view.close();
+
 		File file = new File(filePath);
+		TesterStrategy testerStrategy;
 		if(file.isDirectory()) {
-			new Tester(file.getPath(), new MapFolderTesterStrategy());
+			testerStrategy = new MapFolderTesterStrategy();
 		}
-		else if(file.isFile()) {
-			new Tester(file.getPath(), new SingleMapTesterStrategy());
+		else {
+			testerStrategy = new SingleMapTesterStrategy();
 		}
+
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void> () {
+			@Override
+			protected Void doInBackground() throws Exception {
+				new Tester(filePath, testerStrategy);
+				return null;
+			}
+		};
+
+		worker.execute();
 	}
 }

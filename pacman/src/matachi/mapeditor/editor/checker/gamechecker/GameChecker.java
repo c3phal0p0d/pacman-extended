@@ -18,7 +18,7 @@ public class GameChecker {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        gameChecks = new ArrayList<GameCheck>();
+        gameChecks = new ArrayList<>();
         gameChecks.add(new OneCorrectlyNamedMapCheck(this));
         gameChecks.add(new MapUniqueNumberCheck(this));
     }

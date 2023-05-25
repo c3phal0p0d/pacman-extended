@@ -1,8 +1,6 @@
 package src.matachi.mapeditor.editor.checker.levelchecker;
 
-import src.Map;
-
-import java.io.FileWriter;
+import src.game.Map;
 
 /* Checks that there are at least two Gold and Pill in total */
 public class TwoItemCheck implements LevelCheck {

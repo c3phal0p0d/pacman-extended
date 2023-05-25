@@ -1,4 +1,4 @@
-package src;
+package src.game;
 
 public enum MonsterType {
     Troll,
