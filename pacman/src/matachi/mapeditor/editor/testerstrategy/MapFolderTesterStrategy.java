@@ -8,6 +8,7 @@ import src.matachi.mapeditor.editor.checker.gamechecker.GameChecker;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Properties;
 
@@ -40,6 +41,7 @@ public class MapFolderTesterStrategy implements TesterStrategy {
         // Convert .xml files to Maps
         File gameFolder = file;
         File[] mapFiles = gameFolder.listFiles();
+
         if (mapFiles != null) {
             for (File mapFile : mapFiles) {
                 if (mapFile.getName().endsWith(".xml")&&Character.isDigit(mapFile.getName().charAt(0))){  // should only test maps with valid file names

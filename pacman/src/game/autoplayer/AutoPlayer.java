@@ -1,7 +1,7 @@
 package src.game.autoplayer;
 
 import src.game.actor.PacActor;
-import src.game.Map;
+import src.matachi.Map;
 
 public class AutoPlayer {
 
