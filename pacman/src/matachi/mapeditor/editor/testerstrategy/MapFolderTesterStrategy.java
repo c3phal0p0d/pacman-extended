@@ -29,7 +29,9 @@ public class MapFolderTesterStrategy extends TesterStrategy {
         File[] mapFiles = gameFolder.listFiles();
         if (mapFiles != null) {
             for (File mapFile : mapFiles) {
-                maps.add(new Map(mapFile.getName(), mapFile.getPath()));
+                if (mapFile.getName().endsWith(".xml")&&Character.isDigit(mapFile.getName().charAt(0))){  // should only test maps with valid file names
+                    maps.add(new Map(mapFile.getName(), mapFile.getPath()));
+                }
             }
         }
         maxMapIndex = maps.size() - 1;
