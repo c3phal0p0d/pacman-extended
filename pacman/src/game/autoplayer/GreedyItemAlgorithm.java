@@ -3,8 +3,6 @@ package src.game.autoplayer;
 import ch.aplu.jgamegrid.*;
 import src.game.actor.PacActor;
 import src.game.actor.portals.Portal;
-import src.game.Map;
-import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +17,13 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
     /**
      * EXECUTES the `AutoPlayer` by greedily moving towards the closest item
      * @param   player          The agent the player is relinquishing control of
-     * @param   map             The map to check the validity of
-     * @param   levelChecker    Used to check the validity of a map
      * @return  A boolean where `true`
      */
     @Override
-    public boolean performAlgorithm(PacActor player, Map map, LevelChecker levelChecker) {
+    public boolean performAlgorithm(PacActor player) {
 
         // STEP 1: Ensure the level is valid
-        if (levelChecker.performChecks(map) == false) {
-            return false;
-        }
+
         // STEP 2: Get a list of all the valid neighbour locations
         ArrayList<Location> neighbours = this.getValidNeighbours(player);
 
