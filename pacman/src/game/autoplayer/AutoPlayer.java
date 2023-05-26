@@ -1,6 +1,8 @@
 package src.game.autoplayer;
 
 import src.game.actor.PacActor;
+import src.game.Map;
+import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 
 public class AutoPlayer {
 
@@ -14,7 +16,7 @@ public class AutoPlayer {
      * @param player    The agent the player is relinquishing control of
      * @param strategy  A concrete class that implements the `AutoPlayerAlgorithm` interface
      */
-    public AutoPlayer(PacActor player, AutoPlayerAlgorithm strategy) {
+    public AutoPlayer(PacActor player, AutoPlayerAlgorithm strategy, Map map) {
         this.player = player;
         this.strategy = strategy;
     }
@@ -31,7 +33,7 @@ public class AutoPlayer {
      * EXECUTES the strategy.
      * @return  A boolean where `true` indicates a move was found OR `false` otherwise
      */
-    public boolean runStrategy() {
-        return this.strategy.performAlgorithm(this.player);
+    public boolean runStrategy(Map map, LevelChecker levelChecker) {
+        return this.strategy.performAlgorithm(this.player, map, levelChecker);
     }
 }

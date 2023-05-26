@@ -1,9 +1,10 @@
 package src.game.autoplayer;
 
-import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.*;
 import src.game.actor.PacActor;
 import src.game.actor.portals.Portal;
+import src.game.Map;
+import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +18,26 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
 
     /**
      * EXECUTES the `AutoPlayer` by greedily moving towards the closest item
-     * @param   player  The agent the player is relinquishing control of
+     * @param   player          The agent the player is relinquishing control of
+     * @param   map             The map to check the validity of
+     * @param   levelChecker    Used to check the validity of a map
      * @return  A boolean where `true`
      */
     @Override
-    public boolean performAlgorithm(PacActor player) {
+    public boolean performAlgorithm(PacActor player, Map map, LevelChecker levelChecker) {
 
-        // STEP 1: Get a list of all the valid neighbour locations
+        // STEP 1: Ensure the level is valid
+        if (levelChecker.performChecks(map) == false) {
+            return false;
+        }
+        // STEP 2: Get a list of all the valid neighbour locations
         ArrayList<Location> neighbours = this.getValidNeighbours(player);
 
-        // STEP 2: Check if there are no neighbour cells
+        // STEP 3: Check if there are no neighbour cells
         if (neighbours == null) {
             return false;
         }
-        // STEP 3: Move to the neighbour location if it has an item
+        // STEP 4: Move to the neighbour location if it has an item
         Location itemLocation = this.checkNeighbourItem(player, neighbours);
         if (itemLocation != null) {
             Location.CompassDirection itemDirection = player.getLocation().get4CompassDirectionTo(itemLocation);
@@ -39,10 +46,10 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
             player.eatPill(itemLocation);
             return true;
         }
-        // STEP 4: Check which neighbour is closer to THEIR closest pill
+        // STEP 5: Check which neighbour is closer to THEIR closest pill
         Location idealNeighbour = this.getIdealNeighbour(player, neighbours);
 
-        // STEP 5: Move to the neighbour who is closest to it's closest pill
+        // STEP 6: Move to the neighbour who is closest to it's closest pill
         Location.CompassDirection idealDirection = player.getLocation().get4CompassDirectionTo(idealNeighbour);
         player.setDirection(idealDirection);
         player.setLocation(idealNeighbour);
