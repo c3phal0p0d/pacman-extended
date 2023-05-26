@@ -45,12 +45,12 @@ public class View {
 	/**
 	 * Constructs the View.
 	 * 
-	 * @param controller
-	 *            The controller.
+	 * @param editor
+	 *            The editor.
 	 * @param model
 	 *            The model.
 	 */
-	public View(Controller controller, Camera camera, JPanel grid,
+	public View(Editor editor, Camera camera, JPanel grid,
 			List<? extends Tile> tiles) {
 
 		// showingGrid = true;
@@ -66,23 +66,27 @@ public class View {
 			button.setPreferredSize(new Dimension(Constants.TILE_WIDTH,
 					Constants.TILE_HEIGHT));
 			button.setIcon(t.getIcon());
-			button.addActionListener(controller);
+			button.addActionListener(editor);
 			button.setActionCommand(Character.toString(t.getCharacter()));
 			palette.add(button);
 		}
 
 		/** Create the right panel. */
 		// showGridButton = new JButton("Hide grid");
-		// showGridButton.addActionListener(controller);
+		// showGridButton.addActionListener(editor);
 		// showGridButton.setActionCommand("flipGrid");
 
 		JButton saveButton = new JButton("Save");
-		saveButton.addActionListener(controller);
+		saveButton.addActionListener(editor);
 		saveButton.setActionCommand("save");
 
 		JButton loadButton = new JButton("Load");
-		loadButton.addActionListener(controller);
+		loadButton.addActionListener(editor);
 		loadButton.setActionCommand("load");
+
+		JButton testButton = new JButton("Test");
+		testButton.addActionListener(editor);
+		testButton.setActionCommand("test");
 
 		JPanel right = new JPanel();
 		right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
@@ -91,6 +95,7 @@ public class View {
 		// right.add(showGridButton);
 		right.add(saveButton);
 		right.add(loadButton);
+		right.add(testButton);
 
 		/** The top panel, that shows coordinates and stuff. */
 		CameraInformationLabel cameraInformationLabel = new CameraInformationLabel(camera);
@@ -101,14 +106,14 @@ public class View {
 		JLabel lblHeight = new JLabel("Height(min:20):");
 
 		txtWidth = new JTextField(Constants.MAP_WIDTH + "", 3);
-		txtWidth.getDocument().addDocumentListener(controller.updateSizeFields);
+		txtWidth.getDocument().addDocumentListener(editor.updateSizeFields);
 		txtWidth.setEnabled(false);
 		txtHeight = new JTextField(Constants.MAP_HEIGHT + "", 3);
 		txtHeight.getDocument()
-				.addDocumentListener(controller.updateSizeFields);
+				.addDocumentListener(editor.updateSizeFields);
 		txtHeight.setEnabled(false);
 		JButton updateSize = new JButton("Reset");
-		updateSize.addActionListener(controller);
+		updateSize.addActionListener(editor);
 		updateSize.setActionCommand("update");
 
 		JPanel top = new JPanel();
@@ -160,7 +165,7 @@ public class View {
 	}
 
 	public void close() {
-		frame.setVisible(false);
+		frame.dispose();
 	}
 	// /**
 	// * Flip the grid on or off.
