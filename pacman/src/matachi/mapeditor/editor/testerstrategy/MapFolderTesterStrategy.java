@@ -41,6 +41,7 @@ public class MapFolderTesterStrategy implements TesterStrategy {
         // Convert .xml files to Maps
         File gameFolder = file;
         File[] mapFiles = gameFolder.listFiles();
+        sortByNumber(mapFiles);
 
         if (mapFiles != null) {
             for (File mapFile : mapFiles) {
@@ -89,6 +90,45 @@ public class MapFolderTesterStrategy implements TesterStrategy {
         }
         else {
             changeMode(null);
+        }
+    }
+
+    // Sorts array of map files by file names
+    // Referenced from https://stackoverflow.com/questions/16898029/how-to-sort-file-names-in-ascending-order
+    public void sortByNumber(File[] files) {
+        Arrays.sort(files, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                int n1 = extractNumber(o1.getName());
+                int n2 = extractNumber(o2.getName());
+                return n1 - n2;
+            }
+
+            private int extractNumber(String name) {
+                int len = name.length();
+                int firstCharIndex = len;
+                for(int i = 0; i < len; i++) {
+                    if(!Character.isDigit(name.charAt(i))) {
+                        firstCharIndex = i;
+                        break;
+                    }
+                }
+
+                int i = 0;
+                try {
+                    int start = 0;
+                    String number = name.substring(start, firstCharIndex);
+                    i = Integer.parseInt(number);
+                } catch(Exception e) {
+                    i = 0; // if filename does not match the format
+                    // then default to 0
+                }
+                return i;
+            }
+        });
+
+        for(File f : files) {
+            System.out.println(f.getName());
         }
     }
 }
