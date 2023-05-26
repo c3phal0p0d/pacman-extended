@@ -32,6 +32,8 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         // STEP 3: Move to the neighbour location if it has an item
         Location itemLocation = this.checkNeighbourItem(player, neighbours);
         if (itemLocation != null) {
+            Location.CompassDirection itemDirection = player.getLocation().get4CompassDirectionTo(itemLocation);
+            player.setDirection(itemDirection);
             player.setLocation(itemLocation);
             player.eatPill(itemLocation);
             return true;
@@ -40,6 +42,8 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         Location idealNeighbour = this.getIdealNeighbour(player, neighbours);
 
         // STEP 5: Move to the neighbour who is closest to it's closest pill
+        Location.CompassDirection idealDirection = player.getLocation().get4CompassDirectionTo(idealNeighbour);
+        player.setDirection(idealDirection);
         player.setLocation(idealNeighbour);
         return true;
     }
@@ -137,7 +141,10 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         // STEP 2: Iterate through the neighbour locations
         for (Location neighbour: neighbours) {
 
-            // STEP 3: Calculate their distances to THEIR closest pill
+            // CASE 3A: Neighbour is a portal
+
+
+            // CASE 3B: Neighbour is NOT a portal
             Location neighbourClosestItemLocation = this.getClosestItemLocation(player, neighbour);
             int neighbourItemDistance = neighbour.getDistanceTo(neighbourClosestItemLocation);
 
