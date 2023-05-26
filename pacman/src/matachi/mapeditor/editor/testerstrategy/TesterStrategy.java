@@ -3,13 +3,13 @@ package src.matachi.mapeditor.editor.testerstrategy;
 import src.matachi.mapeditor.editor.Editor;
 import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 
-public abstract class TesterStrategy {
+public interface TesterStrategy {
 
-    protected LevelChecker levelChecker = LevelChecker.getInstance();
+    LevelChecker levelChecker = LevelChecker.getInstance();
 
-    public abstract void test(String filePath);
+    void test(String filePath);
 
-    public void changeMode(String filepath) {
+    default void changeMode(String filepath) {
         new Editor(filepath);
     }
 }

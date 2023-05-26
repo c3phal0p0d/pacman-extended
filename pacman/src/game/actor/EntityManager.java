@@ -3,7 +3,7 @@ package src.game.actor;
 import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
 import src.game.Game;
-import src.game.Map;
+import src.matachi.Map;
 import src.game.actor.items.ItemManager;
 import src.matachi.mapeditor.editor.Constants;
 

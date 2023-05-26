@@ -1,9 +1,10 @@
 package src.matachi.mapeditor.editor.testerstrategy;
 
 import src.game.Game;
-import src.game.Map;
+import src.matachi.Map;
 import src.game.utility.GameCallback;
 import src.game.utility.PropertiesLoader;
+import src.matachi.mapeditor.editor.checker.gamechecker.GameChecker;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,15 +13,27 @@ import java.util.Properties;
 
 import static src.Driver.DEFAULT_PROPERTIES_PATH;
 
-public class MapFolderTesterStrategy extends TesterStrategy {
+public class MapFolderTesterStrategy implements TesterStrategy {
 
     private int currentGameIndex = 0;
     private int maxMapIndex;
     private ArrayList<Map> maps = new ArrayList<>();
     private Properties properties;
 
+    private GameChecker gameChecker = GameChecker.getInstance();
+
     @Override
     public void test(String filePath) {
+
+        // Apply Game Checks
+        boolean isGameValid = gameChecker.performChecks(filePath);
+
+        // Game is invalid, return to editor
+        if(!isGameValid) {
+            changeMode(null);
+            return;
+        }
+
         // Open File
         File file = new File(filePath);
 

@@ -1,7 +1,7 @@
 package src.matachi.mapeditor.editor.testerstrategy;
 
 import src.game.Game;
-import src.game.Map;
+import src.matachi.Map;
 import src.game.utility.GameCallback;
 import src.game.utility.PropertiesLoader;
 
@@ -10,7 +10,7 @@ import java.util.Properties;
 
 import static src.Driver.DEFAULT_PROPERTIES_PATH;
 
-public class SingleMapTesterStrategy extends TesterStrategy {
+public class SingleMapTesterStrategy implements TesterStrategy {
 
 
     @Override
@@ -22,7 +22,7 @@ public class SingleMapTesterStrategy extends TesterStrategy {
         Map map = new Map(file.getName(), file.getPath());
 
         // Apply level checking
-        boolean isLevelValid = super.levelChecker.performChecks(map);
+        boolean isLevelValid = levelChecker.performChecks(map);
 
         // If checks succeed, run game with that level map
         if (isLevelValid){

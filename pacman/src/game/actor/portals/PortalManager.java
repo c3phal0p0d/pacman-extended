@@ -3,13 +3,11 @@ package src.game.actor.portals;
 import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
 import src.game.Game;
-import src.game.Map;
+import src.matachi.Map;
 import src.game.actor.Monster;
 import src.game.actor.PacActor;
 import src.matachi.mapeditor.editor.Constants;
 
-import javax.sound.sampled.Port;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PortalManager {

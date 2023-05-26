@@ -15,7 +15,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import src.game.Map;
+import src.matachi.Map;
 import src.matachi.mapeditor.editor.checker.levelchecker.LevelChecker;
 import src.matachi.mapeditor.editor.testerstrategy.MapFolderTesterStrategy;
 import src.matachi.mapeditor.editor.testerstrategy.SingleMapTesterStrategy;

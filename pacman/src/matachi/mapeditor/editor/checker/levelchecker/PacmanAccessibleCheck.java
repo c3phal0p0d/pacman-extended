@@ -1,6 +1,6 @@
 package src.matachi.mapeditor.editor.checker.levelchecker;
 
-import src.game.Map;
+import src.matachi.Map;
 
 /* Check for each Gold and Pill being accessible to PacMan from the starting point, ignoring monsters but accounting for valid portals */
 public class PacmanAccessibleCheck implements LevelCheck {

@@ -1,6 +1,6 @@
 package src.matachi.mapeditor.editor.checker.levelchecker;
 
-import src.game.Map;
+import src.matachi.Map;
 
 import java.io.File;
 import java.io.FileWriter;

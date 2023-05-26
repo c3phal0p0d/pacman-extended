@@ -10,6 +10,7 @@ import src.game.actor.EntityManager;
 import src.game.actor.items.ItemManager;
 import src.game.actor.portals.PortalManager;
 import src.game.utility.GameCallback;
+import src.matachi.Map;
 
 import java.awt.*;
 import java.util.Properties;

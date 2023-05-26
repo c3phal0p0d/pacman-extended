@@ -2,11 +2,10 @@ package src.game.actor.items;
 
 import ch.aplu.jgamegrid.Location;
 import src.game.Game;
-import src.game.Map;
+import src.matachi.Map;
 import src.matachi.mapeditor.editor.Constants;
 
 import java.util.ArrayList;
-import java.util.Properties;
 
 /**
  * Type: New file

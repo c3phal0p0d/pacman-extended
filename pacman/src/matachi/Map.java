@@ -1,10 +1,11 @@
-package src.game;
+package src.matachi;
 
 import ch.aplu.jgamegrid.GGBackground;
 import ch.aplu.jgamegrid.Location;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
+import src.game.Game;
 import src.matachi.mapeditor.editor.Constants;
 
 import java.awt.*;
