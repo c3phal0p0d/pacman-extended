@@ -111,7 +111,6 @@ public class ItemManager {
                 if (location.getX() == gold.getLocation().getX() && location.getY() == gold.getLocation().getY()) {
                     gold.hide();
                     gold.claim();
-                    return;
                 }
             }
         // CASE B: Removing an ICE item
@@ -120,7 +119,6 @@ public class ItemManager {
                 if (location.getX() == ice.getLocation().getX() && location.getY() == ice.getLocation().getY()) {
                     ice.hide();
                     ice.claim();
-                    return;
                 }
             }
         // CASE C: Removing a PILL
@@ -129,10 +127,12 @@ public class ItemManager {
                 if (location.getX() == pill.getLocation().getX() && location.getY() == pill.getLocation().getY()) {
                     pill.hide();
                     pill.claim();
-                    return;
                 }
             }
         }
+
+        pillAndItemLocations.remove(location);
+
     }
 
     /**
