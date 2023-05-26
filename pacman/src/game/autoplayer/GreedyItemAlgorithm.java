@@ -35,11 +35,9 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         Location itemLocation = this.checkNeighbourItem(player, neighbours);
         if (itemLocation != null) {
             Location.CompassDirection itemDirection = player.getLocation().get4CompassDirectionTo(itemLocation);
-            player.setDirection(itemDirection);
             player.setLocation(itemLocation);
             player.eatPill(itemLocation);
-            System.out.println(player.getItemManager().getPillAndItemLocations().size());
-            System.out.println("itemLocation = " + itemLocation);
+            player.setDirection(itemDirection);
             return true;
         }
         // STEP 5: Check which neighbour is closer to THEIR closest pill
@@ -49,7 +47,6 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         Location.CompassDirection idealDirection = player.getLocation().get4CompassDirectionTo(idealNeighbour);
         player.setDirection(idealDirection);
         player.setLocation(idealNeighbour);
-        System.out.println("idealNeighbour = " + idealNeighbour);
         return true;
     }
 

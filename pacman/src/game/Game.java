@@ -52,7 +52,7 @@ public class Game extends GameGrid
         this.properties = properties;
         this.map = map;
         setSimulationPeriod(100);
-        setTitle("[PacMan in the Multiverse]");
+        setTitle("[PacMan in the TorusVerse]");
 
         // STEP 2: Setup Components
         itemManager = new ItemManager();

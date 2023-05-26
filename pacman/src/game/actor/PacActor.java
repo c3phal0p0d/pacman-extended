@@ -132,7 +132,7 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
                 getBackground().fillCell(location, Color.lightGray);
                 gameCallback.pacManEatPillsAndItems(location, "gold");
                 itemManager.removeItem(ItemType.Gold, location);
-                if(version.equals("multiverse")) {
+                if(version.equals("torusverse")) {
                     entityManager.makeFurious();
                 }
 
@@ -141,13 +141,13 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
                 getBackground().fillCell(location, Color.lightGray);
                 gameCallback.pacManEatPillsAndItems(location, "ice");
                 itemManager.removeItem(ItemType.Ice, location);
-                if(version.equals("multiverse")) {
+                if(version.equals("toruseverse")) {
                     entityManager.freezeMonsters();
                 }
             }
         }
         // STEP 4: Update & display the current score
-        String title = "[PacMan in the Multiverse] Current score: " + score;
+        String title = "[PacMan in the TorusVerse] Current score: " + score;
         gameGrid.setTitle(title);
     }
 
