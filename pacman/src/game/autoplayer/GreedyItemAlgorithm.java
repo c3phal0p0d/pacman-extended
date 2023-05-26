@@ -16,7 +16,7 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
 
     /**
      * EXECUTES the `AutoPlayer` by greedily moving towards the closest item
-     * @param   player The agent the player is relinquishing control of
+     * @param   player  The agent the player is relinquishing control of
      * @return  A boolean where `true`
      */
     @Override
@@ -37,9 +37,10 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
             return true;
         }
         // STEP 4: Check which neighbour is closer to THEIR closest pill
+        Location idealNeighbour = this.getIdealNeighbour(player, neighbours);
 
         // STEP 5: Move to the neighbour who is closest to it's closest pill
-
+        player.setLocation(idealNeighbour);
         return true;
     }
 
@@ -119,5 +120,34 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         }
         // STEP 4: Return the closest item location
         return currentLocation;
+    }
+
+    /**
+     * AUXILIARY - CALCULATES which neighbour the `player`'s should traverse to.
+     * @param   player      The agent the player is relinquishing control of
+     * @param   neighbours  The neighbour cells of the player
+     * @return  A location of one of the `player`'s neighbours that it should traverse to
+     */
+    public Location getIdealNeighbour(PacActor player, ArrayList<Location> neighbours) {
+
+        // STEP 1: Initialise variables to store ideal neighbour
+        Location idealNeighbour = null;
+        int distanceToItem = Integer.MAX_VALUE;
+
+        // STEP 2: Iterate through the neighbour locations
+        for (Location neighbour: neighbours) {
+
+            // STEP 3: Calculate their distances to THEIR closest pill
+            Location neighbourClosestItemLocation = this.getClosestItemLocation(player, neighbour);
+            int neighbourItemDistance = neighbour.getDistanceTo(neighbourClosestItemLocation);
+
+            // STEP 4: Update ideal neighbour if the distance is LESS
+            if (neighbourItemDistance < distanceToItem) {
+                 idealNeighbour = neighbour;
+                 distanceToItem = neighbourItemDistance;
+            }
+        }
+        // STEP 5: Return the ideal neighbour
+        return idealNeighbour;
     }
 }
