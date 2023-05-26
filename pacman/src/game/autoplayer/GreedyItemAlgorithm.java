@@ -3,6 +3,7 @@ package src.game.autoplayer;
 import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.*;
 import src.game.actor.PacActor;
+import src.game.actor.portals.Portal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,20 +142,27 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         // STEP 2: Iterate through the neighbour locations
         for (Location neighbour: neighbours) {
 
-            // CASE 3A: Neighbour is a portal
-
-
-            // CASE 3B: Neighbour is NOT a portal
+            // STEP 3: Neighbour is NOT a portal
             Location neighbourClosestItemLocation = this.getClosestItemLocation(player, neighbour);
             int neighbourItemDistance = neighbour.getDistanceTo(neighbourClosestItemLocation);
 
-            // STEP 4: Update ideal neighbour if the distance is LESS
+            // STEP 4: Check if the neighbour is a portal
+            for (Portal portal: player.getPortalManager().getPortals()) {
+
+                // STEP 5: Adjust the neighbour as the portal pair
+                if (neighbour.equals(portal.getLocation())) {
+                    neighbourClosestItemLocation =
+                                this.getClosestItemLocation(player, portal.getPartner().getLocation());
+                    neighbourItemDistance = neighbour.getDistanceTo(neighbourClosestItemLocation);
+                }
+            }
+            // STEP 6: Update ideal neighbour if the distance is LESS
             if (neighbourItemDistance < distanceToItem) {
                  idealNeighbour = neighbour;
                  distanceToItem = neighbourItemDistance;
             }
         }
-        // STEP 5: Return the ideal neighbour
+        // STEP 7: Return the ideal neighbour
         return idealNeighbour;
     }
 }
