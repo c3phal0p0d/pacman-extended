@@ -5,6 +5,8 @@ import ch.aplu.jgamegrid.Location;
 import src.game.Game;
 import src.game.Map;
 import src.game.actor.items.ItemManager;
+import src.game.autoplayer.AutoPlayer;
+import src.game.autoplayer.AutoPlayerAlgorithm;
 import src.matachi.mapeditor.editor.Constants;
 
 import java.util.ArrayList;
@@ -33,20 +35,20 @@ public class EntityManager {
      * @param game          The specifications of the board
      * @param itemManager   An instance of the 'ItemManager'
      */
-    public EntityManager(Game game, ItemManager itemManager, Properties properties, Map map) {
+    public EntityManager(Game game, ItemManager itemManager, Properties properties, Map map, AutoPlayerAlgorithm strategy) {
 
         this.properties = properties;
         this.itemManager = itemManager;
 
         // STEP 1: Find and initialize map monsters
-        initializeMapEntities(game, map);
+        initializeMapEntities(game, map, strategy);
     }
 
     /**
      * Searches the map object to find the monsters on the map and adds them to an array of monsters
      * @param map
      */
-    private void initializeMapEntities(Game game, Map map) {
+    private void initializeMapEntities(Game game, Map map, AutoPlayerAlgorithm strategy) {
         int width = map.getWidth();
         int height = map.getHeight();
 
@@ -66,7 +68,7 @@ public class EntityManager {
                     createTX5(game, location);
                 }
                 else if(a == Constants.PAC_TILE_CHAR) {
-                    createPacActor(game, location);
+                    createPacActor(game, location, strategy);
                 }
             }
         }
@@ -76,10 +78,10 @@ public class EntityManager {
      * CREATES an instance of 'PacActor'.
      * @param game  The game the new 'PacActor' instance will reside in
      */
-    public void createPacActor(Game game, Location location) {
+    public void createPacActor(Game game, Location location, AutoPlayerAlgorithm strategy) {
 
         // STEP 1: Create the 'PacActor' instance
-        pacActor = new PacActor(game, location);
+        pacActor = new PacActor(game, location, strategy);
 
         // STEP 2: Setup automatic settings
         pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
