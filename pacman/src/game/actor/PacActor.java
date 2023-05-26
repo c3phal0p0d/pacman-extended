@@ -8,6 +8,7 @@ import src.game.Game;
 import src.game.actor.items.Item;
 import src.game.actor.items.ItemManager;
 import src.game.actor.items.ItemType;
+import src.game.actor.portals.PortalManager;
 import src.game.utility.GameCallback;
 
 import java.awt.*;
@@ -41,6 +42,8 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     private String version;
     private EntityManager entityManager;
     private ItemManager itemManager;
+
+    private PortalManager portalManager;
     private GameCallback gameCallback;
     private int numHorzCells;
     private int numVertCells;
@@ -60,6 +63,7 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
         this.numVertCells = game.getNumVertCells();
         this.entityManager = game.getEntityManager();
         this.itemManager = game.getItemManager();
+        this.portalManager = game.getPortalManager();
         this.playerController = new PlayerController(this);
 
         // STEP 2: Set up locations

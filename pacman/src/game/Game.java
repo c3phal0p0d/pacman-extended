@@ -144,6 +144,7 @@ public class Game extends GameGrid
     public EntityManager getEntityManager() {
         return entityManager;
     }
+    public PortalManager getPortalManager() { return this.portalManager; }
 
     public void closeGame() {
         this.getFrame().dispose();

@@ -1,16 +1,21 @@
 package src.game.autoplayer;
 
+import src.game.actor.PacActor;
+
 public class AutoPlayer {
 
     // Class Attributes:
+    private PacActor player;
     private AutoPlayerAlgorithm strategy;
 
     /**
      * The CONTEXT class for the strategy pattern (i.e. stores & selects the strategy to be used by the
      * `AutoPlayer` agent).
+     * @param player    The agent the player is relinquishing control of
      * @param strategy  A concrete class that implements the `AutoPlayerAlgorithm` interface
      */
-    public AutoPlayer(AutoPlayerAlgorithm strategy) {
+    public AutoPlayer(PacActor player, AutoPlayerAlgorithm strategy) {
+        this.player = player;
         this.strategy = strategy;
     }
 
@@ -27,6 +32,6 @@ public class AutoPlayer {
      * @return  A boolean where `true` indicates a move was found OR `false` otherwise
      */
     public boolean runStrategy() {
-        return this.strategy.performAlgorithm();
+        return this.strategy.performAlgorithm(this.player);
     }
 }
