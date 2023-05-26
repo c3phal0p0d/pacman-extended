@@ -143,4 +143,7 @@ public class PortalManager {
 
     // Getter method
     public boolean getIsTherePortals() { return isTherePortals; }
+    public ArrayList<Portal> getPortals() {
+        return portals;
+    }
 }

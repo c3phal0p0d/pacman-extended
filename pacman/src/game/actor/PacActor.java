@@ -8,6 +8,9 @@ import src.game.Game;
 import src.game.actor.items.Item;
 import src.game.actor.items.ItemManager;
 import src.game.actor.items.ItemType;
+import src.game.actor.portals.PortalManager;
+import src.game.autoplayer.AutoPlayer;
+import src.game.autoplayer.AutoPlayerAlgorithm;
 import src.game.utility.GameCallback;
 
 import java.awt.*;
@@ -41,16 +44,19 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     private String version;
     private EntityManager entityManager;
     private ItemManager itemManager;
+    private PortalManager portalManager;
     private GameCallback gameCallback;
     private int numHorzCells;
     private int numVertCells;
     private boolean isAuto = false;
 
+    private AutoPlayer autoPlayer;
+
     /**
      * INSTANTIATES an instance of 'PacActor'.
      * @param game Contains the information associated with 'PacActor' attributes
      */
-    public PacActor(Game game, Location location)
+    public PacActor(Game game, Location location, AutoPlayerAlgorithm strategy)
     {
         // STEP 1: Assign attributes
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
@@ -60,10 +66,12 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
         this.numVertCells = game.getNumVertCells();
         this.entityManager = game.getEntityManager();
         this.itemManager = game.getItemManager();
+        this.portalManager = game.getPortalManager();
         this.playerController = new PlayerController(this);
 
         // STEP 2: Set up locations
         game.addActor(this, location);
+        this.autoPlayer = new AutoPlayer(this, strategy);
     }
 
     /**
@@ -83,101 +91,19 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     }
 
     /**
-     * CALCULATES the closest pill location the 'PacActor' is closest to.
-     * @return  The 'Location' of the closest pill
-     */
-    private Location closestPillLocation() {
-        int currentDistance = 1000;
-        Location currentLocation = null;
-        List<Location> pillAndItemLocations = itemManager.getPillAndItemLocations();
-        for (Location location: pillAndItemLocations) {
-            int distanceToPill = location.getDistanceTo(getLocation());
-            if (distanceToPill < currentDistance) {
-                currentLocation = location;
-                currentDistance = distanceToPill;
-            }
-        }
-        return currentLocation;
-    }
-
-    /**
-     * HELPER function for making an AUTOMATED 'PacActor'
-     */
-    private void followPropertyMoves() {
-        String currentMove = propertyMoves.get(propertyMoveIndex);
-        switch(currentMove) {
-            case "R":
-                turn(90);
-                break;
-            case "L":
-                turn(-90);
-                break;
-            case "M":
-                Location next = getNextMoveLocation();
-                if (canMove(next, getBackground(), numHorzCells, numVertCells)) {
-                    setLocation(next);
-                    eatPill(next);
-                }
-                break;
-        }
-        propertyMoveIndex++;
-    }
-
-    /**
      * LOGIC for moving the 'PacActor' automatically.
      */
     private void moveInAutoMode() {
-        if (propertyMoves.size() > propertyMoveIndex) {
-            followPropertyMoves();
-            return;
-        }
-        Location closestPill = closestPillLocation();
-        double oldDirection = getDirection();
-
-        Location.CompassDirection compassDir =
-                getLocation().get4CompassDirectionTo(closestPill);
-        Location next = getLocation().getNeighbourLocation(compassDir);
-        setDirection(compassDir);
-        if (!isVisited(next, visitedList) && canMove(next, getBackground(), numHorzCells, numVertCells)) {
-            setLocation(next);
-        } else {
-            // normal movement
-            int sign = randomiser.nextDouble() < 0.5 ? 1 : -1;
-            setDirection(oldDirection);
-            turn(sign * 90);  // Try to turn left/right
-            next = getNextMoveLocation();
-            if (canMove(next, getBackground(), numHorzCells, numVertCells)) {
-                setLocation(next);
-            } else {
-                setDirection(oldDirection);
-                next = getNextMoveLocation();
-                if (canMove(next, getBackground(), numHorzCells, numVertCells)) // Try to move forward
-                {
-                    setLocation(next);
-                } else {
-                    setDirection(oldDirection);
-                    turn(-sign * 90);  // Try to turn right/left
-                    next = getNextMoveLocation();
-                    if (canMove(next, getBackground(), numHorzCells, numVertCells)) {
-                        setLocation(next);
-                    } else {
-                        setDirection(oldDirection);
-                        turn(180);  // Turn backward
-                        next = getNextMoveLocation();
-                        setLocation(next);
-                    }
-                }
-            }
-        }
-        eatPill(next);
-        addVisitedList(next, visitedList);
+        this.autoPlayer.runStrategy();
     }
 
     /**
      * Handles the LOGIC whenever 'PacActor' touches a consumable item.
      * @param location  The location of the consumable item
+     *
+     * @apiNote CHANGES from `protected` to public
      */
-    protected void eatPill(Location location)
+    public void eatPill(Location location)
     {
         // STEP 1: Get the location of the item to be eaten
         Item item = itemManager.getItemByLocation(location);
@@ -206,7 +132,7 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
                 getBackground().fillCell(location, Color.lightGray);
                 gameCallback.pacManEatPillsAndItems(location, "gold");
                 itemManager.removeItem(ItemType.Gold, location);
-                if(version.equals("multiverse")) {
+                if(version.equals("torusverse")) {
                     entityManager.makeFurious();
                 }
 
@@ -215,13 +141,13 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
                 getBackground().fillCell(location, Color.lightGray);
                 gameCallback.pacManEatPillsAndItems(location, "ice");
                 itemManager.removeItem(ItemType.Ice, location);
-                if(version.equals("multiverse")) {
+                if(version.equals("toruseverse")) {
                     entityManager.freezeMonsters();
                 }
             }
         }
         // STEP 4: Update & display the current score
-        String title = "[PacMan in the Multiverse] Current score: " + score;
+        String title = "[PacMan in the TorusVerse] Current score: " + score;
         gameGrid.setTitle(title);
     }
 
@@ -247,5 +173,12 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     }
     public PlayerController getPlayerController(){
         return playerController;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
+    }
+    public PortalManager getPortalManager() {
+        return portalManager;
     }
 }

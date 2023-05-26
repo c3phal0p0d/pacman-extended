@@ -9,6 +9,8 @@ import ch.aplu.jgamegrid.Location;
 import src.game.actor.EntityManager;
 import src.game.actor.items.ItemManager;
 import src.game.actor.portals.PortalManager;
+import src.game.autoplayer.AutoPlayerAlgorithm;
+import src.game.autoplayer.GreedyItemAlgorithm;
 import src.game.utility.GameCallback;
 import src.matachi.Map;
 
@@ -51,7 +53,7 @@ public class Game extends GameGrid
         this.properties = properties;
         this.map = map;
         setSimulationPeriod(100);
-        setTitle("[PacMan in the Multiverse]");
+        setTitle("[PacMan in the TorusVerse]");
 
         // STEP 2: Setup Components
         itemManager = new ItemManager();
@@ -69,7 +71,7 @@ public class Game extends GameGrid
         portalManager = new PortalManager(this, map);
 
         // STEP 6: Initialise entities
-        createEntityManager(seed, this.map);
+        createEntityManager(seed, this.map, new GreedyItemAlgorithm());
         // Must be called after creating monster manager so that entities are rendered on top of portals
         portalManager.setEntities(this);
 
@@ -123,8 +125,8 @@ public class Game extends GameGrid
      * INSTANTIATES an instance of the Entity Manager.
      * @param seed  RNG seed for 'PacActor'
      */
-    private void createEntityManager(int seed, Map map) {
-        entityManager = new EntityManager(this, itemManager, properties, map);
+    private void createEntityManager(int seed, Map map, AutoPlayerAlgorithm strategy) {
+        entityManager = new EntityManager(this, itemManager, properties, map, strategy);
         entityManager.setSeed(seed);
         entityManager.setSlowDown(3);
     }
@@ -145,6 +147,7 @@ public class Game extends GameGrid
     public EntityManager getEntityManager() {
         return entityManager;
     }
+    public PortalManager getPortalManager() { return this.portalManager; }
 
     public void closeGame() {
         this.getFrame().dispose();

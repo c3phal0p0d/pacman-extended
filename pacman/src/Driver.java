@@ -5,7 +5,7 @@ import src.matachi.mapeditor.editor.Controller;
 import java.io.File;
 
 public class Driver {
-    public static final String DEFAULT_PROPERTIES_PATH = "properties/test2.properties";
+    public static final String DEFAULT_PROPERTIES_PATH = "properties/autotest.properties";
 
     /**
      * Starting point
