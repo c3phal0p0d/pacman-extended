@@ -5,6 +5,7 @@ import ch.aplu.jgamegrid.*;
 import src.game.actor.PacActor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
 
@@ -33,6 +34,7 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         if (itemLocation != null) {
             player.setLocation(itemLocation);
             player.eatPill(itemLocation);
+            return true;
         }
         // STEP 4: Check which neighbour is closer to THEIR closest pill
 
@@ -90,5 +92,32 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         }
         // STEP 2: No neighbours contain items
         return null;
+    }
+
+    /**
+     * AUXILIARY - FINDS which item location is closest to a given `location`.
+     * @param   player    The agent the player is relinquishing control of
+     * @param   location  The location to get the closest pill of
+     * @return  The closest item `Location` to the given `location`
+     */
+    public Location getClosestItemLocation(PacActor player, Location location) {
+
+        // STEP 1: Initialise variables to store closest pill
+        int currentDistance = Integer.MAX_VALUE;
+        Location currentLocation = null;
+        List<Location> pillAndItemLocations = player.getItemManager().getPillAndItemLocations();
+
+        // STEP 2: Search through item locations
+        for (Location cell: pillAndItemLocations) {
+
+            // STEP 3: Check if the item location is closer than the current
+            int distanceToPill = cell.getDistanceTo(location);
+            if (distanceToPill < currentDistance) {
+                currentLocation = cell;
+                currentDistance = distanceToPill;
+            }
+        }
+        // STEP 4: Return the closest item location
+        return currentLocation;
     }
 }
