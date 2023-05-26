@@ -35,19 +35,12 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     private int idSprite = 0;
     private int nbPills = 0;
     private int score = 0;
-    private ArrayList<Location> visitedList = new ArrayList<Location>();
-    private List<String> propertyMoves = new ArrayList<>();
-    private int propertyMoveIndex = 0;
-    private int seed;
-    private Random randomiser = new Random();
     private PlayerController playerController;
     private String version;
     private EntityManager entityManager;
     private ItemManager itemManager;
     private PortalManager portalManager;
     private GameCallback gameCallback;
-    private int numHorzCells;
-    private int numVertCells;
     private boolean isAuto = false;
 
     private AutoPlayer autoPlayer;
@@ -62,8 +55,6 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
         this.version = game.getProperties().getProperty("version");
         this.gameCallback = game.getGameCallback();
-        this.numHorzCells = game.getNumHorzCells();
-        this.numVertCells = game.getNumVertCells();
         this.entityManager = game.getEntityManager();
         this.itemManager = game.getItemManager();
         this.portalManager = game.getPortalManager();
@@ -162,15 +153,7 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     public boolean getAuto(){
         return isAuto;
     }
-    public void setSeed(int seed) {
-        this.seed = seed;
-        randomiser.setSeed(seed);
-    }
-    public void setPropertyMoves(String propertyMoveString) {
-        if (propertyMoveString != null) {
-            this.propertyMoves = Arrays.asList(propertyMoveString.split(","));
-        }
-    }
+
     public PlayerController getPlayerController(){
         return playerController;
     }

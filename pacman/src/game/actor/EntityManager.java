@@ -84,7 +84,6 @@ public class EntityManager {
         pacActor = new PacActor(game, location, strategy);
 
         // STEP 2: Setup automatic settings
-        pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
         pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
         game.addKeyRepeatListener(pacActor.getPlayerController());
         pacActor.setSlowDown(3);
@@ -125,15 +124,7 @@ public class EntityManager {
      * Sets up the random number generator of each ENTITY.
      * @param seed  The seed for the RNG
      */
-    public void setSeed(int seed) {
 
-        // STEP 1: Set up the seed for all monsters
-        for (Monster m: monsters) {
-            m.setSeed(seed);
-        }
-        // STEP 2: Set up the seed for 'PacActor'
-        pacActor.setSeed(seed);
-    }
 
     /**
      * The number of seconds to WAIT before act() method is invoked

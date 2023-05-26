@@ -63,7 +63,6 @@ public class MapFolderTesterStrategy implements TesterStrategy {
         // If checks succeed, run game for all level maps
         if (areLevelsValid){
             System.out.println("Level checks succeeded");
-            maps.sort(Comparator.comparing(Map::getFilePath));
             properties = PropertiesLoader.loadPropertiesFile(DEFAULT_PROPERTIES_PATH);
 
             startNextMap();

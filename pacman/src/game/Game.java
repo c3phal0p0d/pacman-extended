@@ -127,7 +127,6 @@ public class Game extends GameGrid
      */
     private void createEntityManager(int seed, Map map, AutoPlayerAlgorithm strategy) {
         entityManager = new EntityManager(this, itemManager, properties, map, strategy);
-        entityManager.setSeed(seed);
         entityManager.setSlowDown(3);
     }
 
