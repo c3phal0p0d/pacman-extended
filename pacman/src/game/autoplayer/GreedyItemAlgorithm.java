@@ -25,20 +25,24 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         ArrayList<Location> neighbours = this.getValidNeighbours(player);
 
         // STEP 2: Check if there are no neighbour cells
-        if ( neighbours == null) {
+        if (neighbours == null) {
             return false;
         }
         // STEP 3: Move to the neighbour location if it has an item
-
+        Location itemLocation = this.checkNeighbourItem(player, neighbours);
+        if (itemLocation != null) {
+            player.setLocation(itemLocation);
+            player.eatPill(itemLocation);
+        }
         // STEP 4: Check which neighbour is closer to THEIR closest pill
 
-        // STEP 5: Move to the neighbour closet to it's pill
+        // STEP 5: Move to the neighbour who is closest to it's closest pill
 
         return true;
     }
 
     /**
-     * GENERATES an ArrayList of the player's valid neighbour locations.
+     * AUXILIARY - GENERATES an ArrayList of the player's valid neighbour locations.
      * @param   player  The player to determine the neighbours of
      * @return  An ArrayList of neighbour locations or null if there are no
      *          neighbour locations
@@ -65,5 +69,26 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         }
         // CASE 4B: If there are neighbours, the map is valid
         return neighbours;
+    }
+
+    /**
+     * AUXILIARY - CHECKS if any of the player's neighbours stores an item.
+     * @param   player      The player to check the neighbours of
+     * @param   neighbours  The neighbour cells of the player
+     * @return  An instance of a `Location` that holds an item, or `null` if no neighbours
+     *          store an item
+     */
+    public Location checkNeighbourItem(PacActor player, ArrayList<Location> neighbours) {
+
+        // STEP 1: Check if any of the locations store items
+        for (Location neighbour: neighbours) {
+            for (Location itemLocation: player.getItemManager().getPillAndItemLocations()) {
+                if (neighbour.equals(itemLocation)) {
+                    return itemLocation;
+                }
+            }
+        }
+        // STEP 2: No neighbours contain items
+        return null;
     }
 }

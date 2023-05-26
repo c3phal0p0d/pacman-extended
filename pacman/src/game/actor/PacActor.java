@@ -42,7 +42,6 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     private String version;
     private EntityManager entityManager;
     private ItemManager itemManager;
-
     private PortalManager portalManager;
     private GameCallback gameCallback;
     private int numHorzCells;
@@ -180,8 +179,10 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     /**
      * Handles the LOGIC whenever 'PacActor' touches a consumable item.
      * @param location  The location of the consumable item
+     *
+     * @apiNote CHANGES from `protected` to public
      */
-    protected void eatPill(Location location)
+    public void eatPill(Location location)
     {
         // STEP 1: Get the location of the item to be eaten
         Item item = itemManager.getItemByLocation(location);
@@ -251,5 +252,12 @@ public class PacActor extends Actor implements LocationVisitedList, CanMove
     }
     public PlayerController getPlayerController(){
         return playerController;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
+    }
+    public PortalManager getPortalManager() {
+        return portalManager;
     }
 }
