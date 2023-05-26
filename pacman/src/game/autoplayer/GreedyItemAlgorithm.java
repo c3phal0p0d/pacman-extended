@@ -65,18 +65,25 @@ public class GreedyItemAlgorithm implements AutoPlayerAlgorithm {
         Location neighbour;
         for (Location.CompassDirection dir: Location.CompassDirection.values()) {
 
-            // STEP 3: Only add the neighbour if the player can move to that location
+            // STEP 3: Ignore diagonal directions
+            if (dir == Location.CompassDirection.NORTHEAST
+                    || dir == Location.CompassDirection.SOUTHEAST
+                    || dir == Location.CompassDirection.SOUTHWEST
+                    || dir == Location.CompassDirection.NORTHWEST) {
+                continue;
+            }
+            // STEP 4: Only add the neighbour if the player can move to that location
             neighbour = player.getLocation().getNeighbourLocation(dir);
             if (player.canMove(neighbour, player.getBackground(),
                     player.getNbHorzCells(), player.getNbVertCells())) {
                 neighbours.add(neighbour);
             }
         }
-        // CASE 4A: If the there are no neighbours the map is invalid
+        // CASE 5A: If the there are no neighbours the map is invalid
         if (neighbours.isEmpty()) {
             return null;
         }
-        // CASE 4B: If there are neighbours, the map is valid
+        // CASE 5B: If there are neighbours, the map is valid
         return neighbours;
     }
 
